@@ -1,4 +1,4 @@
-name: Deploy Static Site
+name: Deploy SPA
 on:
   push:
     branches: [ main ]
@@ -11,21 +11,13 @@ jobs:
       with:
         node-version: '20'
     - name: Install
-      run: |
-        cd web
-        npm ci
+      run: cd web && npm ci
     - name: Build
-      run: |
-        cd web
-        npm run build
-    - name: Export Static
-      run: |
-        cd web
-        npm run export
+      run: cd web && npm run build
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./web/out
+        publish_dir: ./web/.next
         publish_branch: gh-pages
         force_orphan: true
