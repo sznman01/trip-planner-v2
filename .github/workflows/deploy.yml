@@ -1,15 +1,19 @@
-name: Deploy Next.js SPA
+name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: 20
     - name: Install
       run: cd web && npm ci
     - name: Build
@@ -19,8 +23,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./web/out
-        user_name: 'github-actions[bot]'
-        user_email: 'github-actions[bot]@users.noreply.github.com'
-        commit_message: 'Deploy: {{ github.sha }}'
         publish_branch: gh-pages
-        force_orphan: true
