@@ -13,7 +13,7 @@ jobs:
     - name: Install
       run: |
         cd web
-        npm install  # ✅ 改用 install
+        npm install
     - name: Build
       run: |
         cd web
@@ -22,5 +22,6 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./web/.next
+        publish_dir: ./web/out  # Next.js static export
+        publish_branch: gh-pages  # Actions 自動建
         force_orphan: true
