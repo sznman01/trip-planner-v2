@@ -10,11 +10,10 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: '20'
-    - name: Clean & Install
+    - name: Install
       run: |
         cd web
-        rm -rf .next/ node_modules/ package-lock.json
-        npm ci
+        npm install  # ✅ 改用 install
     - name: Build
       run: |
         cd web
