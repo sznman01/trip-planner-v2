@@ -235,7 +235,7 @@ const upsertTrip = useTripsStore((s) => s.upsertTrip);
         tag: x?.tag === "important" ? "important" : "general",
         completed: Boolean(x?.completed),
       }))
-      .filter((x) => x.name && x.group);
+      .filter((x: ChecklistItemX) => x.name && x.group);
 
     const normalizePayment = (p: any): PaymentX | null => {
       const description = typeof p?.description === "string" ? p.description : "";
@@ -273,7 +273,7 @@ const upsertTrip = useTripsStore((s) => s.upsertTrip);
         gender: m?.gender === "female" ? "female" : "male",
         payments: Array.isArray(m?.payments) ? m.payments.map(normalizePayment).filter(Boolean) : [],
       }))
-      .filter((m) => m.name);
+      .filter((m: MemberX) => m.name);
 
     setChecklist(normalizedChecklist);
     setMembers(normalizedMembers);
@@ -886,7 +886,7 @@ useEffect(() => {
                   placeholder="證件 / 交通 / 行李..."
                 />
                 <datalist id="checklist-groups">
-                  {checklistGroups.map((g) => (
+                  {checklistGroups.map((g: string) => (
                     <option key={g} value={g} />
                   ))}
                 </datalist>
@@ -971,7 +971,7 @@ useEffect(() => {
                 暫時未有成員。
               </div>
             ) : (
-              members.map((m) => {
+              members.map((m: MemberX) => {
                 const total = getMemberTotalPaymentHKD(m);
                 return (
                   <div

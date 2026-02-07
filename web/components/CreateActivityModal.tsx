@@ -45,25 +45,21 @@ export function CreateActivityModal({
   const trips = useTripsStore((s) => s.trips);
 
   // ✅ 自訂 addActivity（取代 store 無嘅方法）
-  const addActivity = useCallback((
-    tripId: string, 
-    payload: InitialValues & { day: number }
-  ) => {
-    const trip = trips.find(t => t.id === tripId);
-    if (!trip) return;
-    const nextTrip = {
-      ...trip,
-      itinerary: [...trip.itinerary, payload]
-    };
-    upsertTrip(nextTrip);
-  }, [trips, upsertTrip]);
+  const addActivity = useCallback((tripId: string, payload: InitialValues & { day: number }): void => {
+  const trip = trips.find(t => t.id === tripId);
+  if (!trip) return;
+  const nextTrip = {
+    ...trip,
+    itinerary: [...trip.itinerary, payload]
+  };
+  upsertTrip(nextTrip);
+}, [trips, upsertTrip]);
 
-  // ✅ 自訂 updateActivity（用 index）
-  const updateActivity = useCallback((
-    tripId: string, 
-    activityIndex: number,
-    payload: InitialValues & { day: number }
-  ) => {
+const updateActivity = useCallback((
+  tripId: string, 
+  activityIndex: number,
+  payload: InitialValues & { day: number }
+): void => {
     const trip = trips.find(t => t.id === tripId);
     if (!trip) return;
     

@@ -5,6 +5,8 @@ import { useParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { Plus, MoreHorizontal, Plane, Hotel, Ticket } from 'lucide-react';
 import { useTripsStore } from '@/lib/store/trips';
+import type { Trip, ActivityType, Geo, DayPlaces } from '@/lib/store/trips'
+
 
 type ReservationType = 'flight' | 'hotel' | 'ticket';
 

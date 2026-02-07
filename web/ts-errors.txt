@@ -1,0 +1,2 @@
+app/trips/[tripId]/prep/page.tsx(238,16): error TS7006: Parameter 'x' implicitly has an 'any' type.
+app/trips/[tripId]/prep/page.tsx(276,16): error TS7006: Parameter 'm' implicitly has an 'any' type.

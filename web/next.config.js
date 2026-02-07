@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Vercel 優化
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    turbopack: {
+      root: process.cwd(),  // ✅ 用 process.cwd()
+    },
   },
+
   // 支援動態路由
   trailingSlash: true,
   // 圖片優化
