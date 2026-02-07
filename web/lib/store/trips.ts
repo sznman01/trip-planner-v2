@@ -35,6 +35,8 @@ export type Reservations = {
   tickets: ReservationTicket[];
 };
 
+export type ActivityType = 'sightseeing' | 'food' | 'transport' | 'accommodation' | 'shopping' | 'relaxation';
+
 export type Activity = {
   day: number;
   time: string; // hh:mm

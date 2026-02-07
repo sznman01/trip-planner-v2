@@ -19,7 +19,8 @@ import {
 } from "lucide-react"
 
 import { useTripsStore } from "@/lib/store/trips"
-import type { ActivityType, Geo, Trip } from "@/lib/store/trips"
+type ActivityType = 'sightseeing' | 'food' | 'transport' | 'accommodation' | 'shopping' | 'relaxation';
+import type { Geo, Trip } from "@/lib/store/trips"
 
 type ItineraryItem = {
   day: number
