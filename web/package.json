@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postinstall": "echo 'rebuild trigger'",
     "start": "next start",
     "lint": "eslint"
   },
@@ -30,4 +31,4 @@
     "typescript": "^5"
   }
 }
-"postinstall": "echo \"rebuild trigger\"",
+

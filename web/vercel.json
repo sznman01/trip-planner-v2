@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "app/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}
