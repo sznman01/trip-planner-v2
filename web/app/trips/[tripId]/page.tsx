@@ -1,5 +1,8 @@
-// 無 "use client"
+'use client'
+
 import { redirect } from "next/navigation";
+import ItineraryPage from './itinerary/page'
+
 
 export async function generateStaticParams() {
   return [
@@ -7,6 +10,7 @@ export async function generateStaticParams() {
     { tripId: "demo-tokyo-2026" }
   ];
 }
+
 
 export default async function TripEntryPage({
   params,
@@ -16,3 +20,4 @@ export default async function TripEntryPage({
   const { tripId } = await params;
   redirect(`/trips/${tripId}/itinerary`);
 }
+

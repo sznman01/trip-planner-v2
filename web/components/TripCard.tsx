@@ -90,8 +90,15 @@ export function TripCard({ trip, onDelete }: Props) {
     return "旅程進行中/已完結";
   }, [countdown]);
 
+  // 🆕 修改後嘅 goTrip - 直接跳 + fallback**
   function goTrip() {
-    router.push(`/trips/${trip.id}/itinerary`);
+    // Next.js router 先試
+      router.push(`/trips/${trip.id}/itinerary`);
+    
+    // 100ms fallback：強制跳轉（避開 Vercel routing bug）
+      setTimeout(() => {
+      (window as any).location.href = `/trips/${trip.id}/itinerary`;
+    }, 100);
   }
 
   function confirmDelete() {
@@ -103,20 +110,34 @@ export function TripCard({ trip, onDelete }: Props) {
   return (
     <div className="overflow-hidden rounded-3xl border bg-white shadow-sm">
       {/* cover */}
-      <div className="relative">
-        {trip.coverImage ? (
-          <img
-            src={trip.coverImage}
-            alt={trip.title}
-            className="h-44 w-full object-cover"
-            onClick={goTrip}
-          />
-        ) : (
-          <div
-            className="h-44 w-full cursor-pointer bg-gradient-to-r from-pink-200 to-red-300"
-            onClick={goTrip}
-          />
-        )}
+      {/* cover */}
+<div className="relative">
+  {trip.coverImage ? (
+    <img
+      src={trip.coverImage}
+      alt={trip.title}
+      className="h-44 w-full object-cover"  // ✅ 正確 className
+      onClick={() => {                    // ✅ Inline handler
+        router.push(`/trips/${trip.id}/itinerary`);
+        setTimeout(() => {
+          (window as any).location.href = `/trips/${trip.id}/itinerary`;
+        }, 100);
+      }}
+    />
+  ) : (
+    <div
+      className="h-44 w-full cursor-pointer bg-gradient-to-r from-pink-200 to-red-300"
+      onClick={() => {                     // ✅ 改 inline，刪 goTrip
+        router.push(`/trips/${trip.id}/itinerary`);
+        setTimeout(() => {
+          (window as any).location.href = `/trips/${trip.id}/itinerary`;
+        }, 100);
+      }}
+    />
+  )}
+  {/* ... action buttons 不變 ... */}
+</div>
+
 
         {/* action buttons (top-right) */}
         <div className="absolute right-3 top-3 flex flex-col gap-2">
@@ -154,7 +175,15 @@ export function TripCard({ trip, onDelete }: Props) {
       </div>
 
       {/* body */}
-      <div className="cursor-pointer p-4" onClick={goTrip}>
+      <div 
+  className="cursor-pointer p-4" 
+  onClick={() => {
+    router.push(`/trips/${trip.id}/itinerary`);
+    setTimeout(() => {
+      (window as any).location.href = `/trips/${trip.id}/itinerary`;
+    }, 100);
+  }}
+>
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="truncate text-lg font-bold text-gray-900">{trip.title}</div>
@@ -183,6 +212,5 @@ export function TripCard({ trip, onDelete }: Props) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
