@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useTripsStore, type ActivityType } from "@/lib/store/trips";
+import { useTripsStore, type ActivityType } from  "@/lib/store/trips";
 
 type InitialValues = {
   time: string;
@@ -12,16 +12,16 @@ type InitialValues = {
 };
 
 type Props = {
-  open: boolean
-  onClose: () => void
-  tripId: string
-  day: number
-  mode?: "create" | "edit"
-  indexInDay?: number // ✅ edit 時：當日第幾個活動（0-based）
-  initialValues?: Partial<InitialValues>
-  onUpdated?: () => void
-}
+  open: boolean;
+  onClose: () => void;
+  tripId: string;
+  day: number;
 
+  mode?: "create" | "edit";
+  activityId?: string;
+  initialValues?: Partial<InitialValues>;
+  onUpdated?: () => void;
+};
 
 const DEFAULTS: InitialValues = {
   time: "09:30",
@@ -37,13 +37,12 @@ export function CreateActivityModal({
   tripId,
   day,
   mode = "create",
-  indexInDay,
+  activityId,
   initialValues,
   onUpdated,
 }: Props) {
-
-  const trip = useTripsStore((s) => s.trips.find((t) => t.id === tripId))
-  const upsertTrip = useTripsStore((s) => s.upsertTrip)
+  const addActivity = useTripsStore((s) => s.addActivity);
+  const updateActivity = useTripsStore((s) => s.updateActivity);
 
   const [time, setTime] = useState(DEFAULTS.time);
   const [name, setName] = useState(DEFAULTS.name);
@@ -99,73 +98,20 @@ export function CreateActivityModal({
       notes:  (notes ?? "").trim(),
     };
 
+    if (mode === "edit") {
+      if (!activityId) {
+        alert("缺少 activityId（edit mode 必填）");
+        return;
+      }
 
-
-      function cloneTrip<T>(t: T): T {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const sc: any = (globalThis as any).structuredClone
-  if (typeof sc === "function") return sc(t)
-  return JSON.parse(JSON.stringify(t)) as T
-}
-
-const handleSubmit = () => {
-  if (!canSubmit) return
-  if (!trip) {
-    window.alert("找不到旅程（可能未載入）")
-    return
-  }
-
-  const payload = {
-    day,
-    time: time.trim(),
-    name: name.trim(),
-    location: location.trim(),
-    type,
-    notes: (notes ?? "").trim(),
-  }
-
-  const next = cloneTrip(trip)
-  if (!Array.isArray((next as any).itinerary)) (next as any).itinerary = []
-  const itinerary = (next as any).itinerary as Array<any>
-
-  if (mode === "edit") {
-    if (typeof indexInDay !== "number" || indexInDay < 0) {
-      window.alert("缺少 indexInDay（edit mode 必填）")
-      return
+      updateActivity(tripId, activityId, payload);
+      onUpdated?.();
+      onClose();
+      return;
     }
 
-    // 取出「屬於當日」嘅 full indices
-    const fullIndices: number[] = []
-    for (let i = 0; i < itinerary.length; i++) {
-      if (itinerary[i]?.day === day) fullIndices.push(i)
-    }
-
-    // 跟畫面一致：按 time 排序後用 indexInDay 定位
-    fullIndices.sort((a, b) => {
-      const ta = String(itinerary[a]?.time ?? "").replace(":", "")
-      const tb = String(itinerary[b]?.time ?? "").replace(":", "")
-      return (Number.parseInt(ta, 10) || 0) - (Number.parseInt(tb, 10) || 0)
-    })
-
-    const fullIndex = fullIndices[indexInDay]
-    if (typeof fullIndex !== "number") {
-      window.alert("indexInDay 超出範圍")
-      return
-    }
-
-    itinerary[fullIndex] = { ...itinerary[fullIndex], ...payload }
-    upsertTrip(next)
-    onUpdated?.()
-    onClose()
-    return
-  }
-
-  // create
-  itinerary.push(payload)
-  upsertTrip(next)
-  onClose()
-}
-
+    addActivity(tripId, payload);
+    onClose();
   };
 
   return (

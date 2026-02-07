@@ -27,4 +27,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-}// 導航改用 hash: onclick={() => window.location.hash = `/trips/${trip.id}`}
+}
