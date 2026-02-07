@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { MapPin, Trash2, Pencil } from "lucide-react";
 import { CreateTripModal } from "@/components/CreateTripModal";
@@ -12,7 +12,7 @@ export type TripCardTrip = {
   startDate: string; // YYYY-MM-DD
   endDate: string; // YYYY-MM-DD
   coverImage?: string;
-  itinerary?: Array<{ day: number }>; // optional
+  itinerary?: Array<{ day: number }>;
 };
 
 type Props = {
@@ -90,16 +90,13 @@ export function TripCard({ trip, onDelete }: Props) {
     return "旅程進行中/已完結";
   }, [countdown]);
 
-  // 🆕 修改後嘅 goTrip - 直接跳 + fallback**
-  function goTrip() {
-    // Next.js router 先試
-      router.push(`/trips/${trip.id}/itinerary`);
-    
-    // 100ms fallback：強制跳轉（避開 Vercel routing bug）
-      setTimeout(() => {
-      (window as any).location.href = `/trips/${trip.id}/itinerary`;
+  const goItinerary = useCallback(() => {
+    const url = `/trips/${trip.id}/itinerary`;
+    router.push(url);
+    window.setTimeout(() => {
+      window.location.href = url;
     }, 100);
-  }
+  }, [router, trip.id]);
 
   function confirmDelete() {
     const ok = confirm(`確定刪除「${trip.title}」？`);
@@ -110,34 +107,20 @@ export function TripCard({ trip, onDelete }: Props) {
   return (
     <div className="overflow-hidden rounded-3xl border bg-white shadow-sm">
       {/* cover */}
-      {/* cover */}
-<div className="relative">
-  {trip.coverImage ? (
-    <img
-      src={trip.coverImage}
-      alt={trip.title}
-      className="h-44 w-full object-cover"  // ✅ 正確 className
-      onClick={() => {                    // ✅ Inline handler
-        router.push(`/trips/${trip.id}/itinerary`);
-        setTimeout(() => {
-          (window as any).location.href = `/trips/${trip.id}/itinerary`;
-        }, 100);
-      }}
-    />
-  ) : (
-    <div
-      className="h-44 w-full cursor-pointer bg-gradient-to-r from-pink-200 to-red-300"
-      onClick={() => {                     // ✅ 改 inline，刪 goTrip
-        router.push(`/trips/${trip.id}/itinerary`);
-        setTimeout(() => {
-          (window as any).location.href = `/trips/${trip.id}/itinerary`;
-        }, 100);
-      }}
-    />
-  )}
-  {/* ... action buttons 不變 ... */}
-</div>
-
+      <div className="relative">
+        {trip.coverImage ? (
+          <img
+            src={trip.coverImage}
+            alt={trip.title}
+            className="h-44 w-full object-cover"
+            onClick={goItinerary}
+          />
+        ) : (
+          <div
+            className="h-44 w-full cursor-pointer bg-gradient-to-r from-pink-200 to-red-300"
+            onClick={goItinerary}
+          />
+        )}
 
         {/* action buttons (top-right) */}
         <div className="absolute right-3 top-3 flex flex-col gap-2">
@@ -154,10 +137,6 @@ export function TripCard({ trip, onDelete }: Props) {
                 編輯
               </button>
             }
-            onDone={() => {
-              // edit 完唔一定要跳頁；如果你想 edit 完即入 itinerary，可改：
-              // router.push(`/trips/${trip.id}/itinerary`)
-            }}
           />
 
           <button
@@ -175,15 +154,7 @@ export function TripCard({ trip, onDelete }: Props) {
       </div>
 
       {/* body */}
-      <div 
-  className="cursor-pointer p-4" 
-  onClick={() => {
-    router.push(`/trips/${trip.id}/itinerary`);
-    setTimeout(() => {
-      (window as any).location.href = `/trips/${trip.id}/itinerary`;
-    }, 100);
-  }}
->
+      <div className="cursor-pointer p-4" onClick={goItinerary}>
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="truncate text-lg font-bold text-gray-900">{trip.title}</div>
@@ -212,5 +183,6 @@ export function TripCard({ trip, onDelete }: Props) {
           </div>
         </div>
       </div>
+    </div>
   );
 }
