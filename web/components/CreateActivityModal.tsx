@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useTripsStore, type ActivityType } from  "@/lib/store/trips";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTripsStore, type ActivityType } from "@/lib/store/trips";
 
 type InitialValues = {
   time: string;
@@ -16,9 +16,8 @@ type Props = {
   onClose: () => void;
   tripId: string;
   day: number;
-
   mode?: "create" | "edit";
-  activityId?: string;
+  activityIndex?: number;  // ✅ 用 index 代替 id
   initialValues?: Partial<InitialValues>;
   onUpdated?: () => void;
 };
@@ -37,12 +36,51 @@ export function CreateActivityModal({
   tripId,
   day,
   mode = "create",
-  activityId,
+  activityIndex,  // ✅ number | undefined
   initialValues,
   onUpdated,
 }: Props) {
-  const addActivity = useTripsStore((s) => s.addActivity);
-  const updateActivity = useTripsStore((s) => s.updateActivity);
+  // ✅ 正確 Zustand hooks
+  const upsertTrip = useTripsStore((s) => s.upsertTrip);
+  const trips = useTripsStore((s) => s.trips);
+
+  // ✅ 自訂 addActivity（取代 store 無嘅方法）
+  const addActivity = useCallback((
+    tripId: string, 
+    payload: InitialValues & { day: number }
+  ) => {
+    const trip = trips.find(t => t.id === tripId);
+    if (!trip) return;
+    const nextTrip = {
+      ...trip,
+      itinerary: [...trip.itinerary, payload]
+    };
+    upsertTrip(nextTrip);
+  }, [trips, upsertTrip]);
+
+  // ✅ 自訂 updateActivity（用 index）
+  const updateActivity = useCallback((
+    tripId: string, 
+    activityIndex: number,
+    payload: InitialValues & { day: number }
+  ) => {
+    const trip = trips.find(t => t.id === tripId);
+    if (!trip) return;
+    
+    const nextItinerary = [...trip.itinerary];
+    nextItinerary[activityIndex] = {
+      ...nextItinerary[activityIndex],
+      day: payload.day,
+      time: payload.time,
+      name: payload.name,
+      location: payload.location,
+      type: payload.type,
+      notes: payload.notes,
+    };
+    
+    const nextTrip = { ...trip, itinerary: nextItinerary };
+    upsertTrip(nextTrip);
+  }, [trips, upsertTrip]);
 
   const [time, setTime] = useState(DEFAULTS.time);
   const [name, setName] = useState(DEFAULTS.name);
@@ -95,22 +133,22 @@ export function CreateActivityModal({
       name: name.trim(),
       location: location.trim(),
       type,
-      notes:  (notes ?? "").trim(),
+      notes: (notes ?? "").trim(),
     };
 
     if (mode === "edit") {
-      if (!activityId) {
-        alert("缺少 activityId（edit mode 必填）");
+      if (typeof activityIndex !== "number") {
+        alert("缺少 activityIndex（edit mode 必填）");
         return;
       }
-
-      updateActivity(tripId, activityId, payload);
+      updateActivity(tripId, activityIndex, payload);  // ✅ 傳 index
       onUpdated?.();
       onClose();
       return;
     }
 
     addActivity(tripId, payload);
+    onUpdated?.();
     onClose();
   };
 

@@ -35,13 +35,34 @@ export type Reservations = {
   tickets: ReservationTicket[];
 };
 
-export type ActivityType = 'sightseeing' | 'food' | 'transport' | 'accommodation' | 'shopping' | 'relaxation';
+export type ActivityType =
+  | "food"
+  | "sightseeing"
+  | "transport"
+  | "accommodation"
+  | "shopping"
+  | "relaxation";
+
+  export type Geo = {
+  latitude: number;
+  longitude: number;
+  resolvedName?: string;
+  country?: string;
+  timezone?: string;
+};
+
+export type DayPlace = {
+  location: string;
+  geo: Geo;
+};
+
+export type DayPlaces = Record<string, DayPlace>; // key = "YYYY-MM-DD"
 
 export type Activity = {
   day: number;
-  time: string; // hh:mm
+  time: string;
   name: string;
-  type: string; // sightseeing/food/shopping/transport/accommodation/...
+  type: ActivityType; // ✅ 改咗
   location: string;
   notes?: string;
   cost?: number;
@@ -113,6 +134,7 @@ export type Trip = {
   checklist: ChecklistItem[];
 
   members: Member[];
+  dayPlaces?: DayPlaces;
 };
 
 // 建 trip 時，唔需要你一次過提供晒全部 array/object
