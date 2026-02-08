@@ -36,11 +36,11 @@ export default function BottomTabBar() {
               key={t.href}
               href={t.href}
               aria-current={active ? "page" : undefined}
-              className={`flex flex-col items-center justify-center gap-1 py-2.5 text-[11px] ${
+              className={`flex flex-col items-center justify-center gap-1 py-4 text-[11px] ${
                 active ? "text-black font-semibold" : "text-gray-500"
               }`}
             >
-              <Icon className="h-5 w-5" strokeWidth={2} aria-hidden="true" />
+              <Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
               <span className="leading-none">{t.label}</span>
             </Link>
           );
