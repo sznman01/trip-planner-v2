@@ -1,6 +1,5 @@
 "use client"
 
-export const dynamic = 'force-dynamic';
 import React, { useEffect, useMemo, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import {
@@ -494,12 +493,12 @@ export default function Page() {
         <div className="flex items-center gap-3">
           <button
   onClick={() => window.location.assign("/")}
-  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white shadow-sm hover:bg-zinc-50"
+  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--card)] shadow-sm hover:bg-[color:var(--card)]/90"
   aria-label="返回首頁"
 >
   <ArrowLeft className="h-5 w-5 text-zinc-700" />
 </button>
-          <div className="text-sm text-zinc-600">找不到旅程／載入中…</div>
+          <div className="text-sm text-[color:var(--muted-foreground)]">找不到旅程／載入中…</div>
         </div>
       </div>
     )
@@ -509,20 +508,20 @@ export default function Page() {
   const progress = countdownProgress(trip.startDate, trip.endDate)
 
   return (
-    <div className="px-4 pt-4 pb-10">
+    <div className="px-4 pt-4 pb-10 bg-gradient-to-b from-[color:var(--background)] to-[color:var(--card)]">
       {/* 頂部 */}
       <div className="mb-4 flex items-center gap-3">
         <button
   onClick={() => router.push("/")}
-  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white shadow-sm hover:bg-zinc-50"
+  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--card)] shadow-sm hover:bg-[color:var(--card)]/90"
   aria-label="返回首頁"
         >
           <ArrowLeft className="h-5 w-5 text-zinc-700" />
         </button>
 
         <div className="min-w-0">
-          <div className="truncate text-base font-semibold text-zinc-900">{trip.title}</div>
-          <div className="flex items-center gap-1 text-sm text-zinc-600">
+          <div className="truncate text-base font-semibold text-[color:var(--foreground)]">{trip.title}</div>
+          <div className="flex items-center gap-1 text-sm text-[color:var(--muted-foreground)]">
             <MapPin className="h-4 w-4" />
             <span className="truncate">{trip.location}</span>
           </div>
@@ -530,18 +529,18 @@ export default function Page() {
       </div>
 
       {/* 封面 */}
-      <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white shadow-sm">
         {trip.coverImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={trip.coverImage} alt={trip.title} className="h-48 w-full object-cover" />
         ) : (
-          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-rose-400 to-rose-600 text-4xl font-bold text-white">
+          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-rose-400 to-rose-600 text-4xl font-bold text-[var(--primary-foreground)]">
             旅
           </div>
         )}
 
         <div className="p-4">
-          <div className="flex items-center gap-2 text-sm text-zinc-600">
+          <div className="flex items-center gap-2 text-sm text-[color:var(--muted-foreground)]">
             <Calendar className="h-4 w-4" />
             <span>{formatDateRangeChinese(trip.dates?.length ? trip.dates : dates)}</span>
           </div>
@@ -549,21 +548,21 @@ export default function Page() {
       </div>
 
       {/* 倒數 / 進度 */}
-      <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
-        <div className="text-sm text-zinc-600">出發倒數</div>
+      <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
+        <div className="text-sm text-[color:var(--muted-foreground)]">出發倒數</div>
         <div className="mt-1 flex items-baseline gap-2">
           <div className="text-4xl font-extrabold text-zinc-900">{countdownDaysText(daysToStart)}</div>
-          {daysToStart > 0 ? <div className="text-sm text-zinc-600">日</div> : null}
+          {daysToStart > 0 ? <div className="text-sm text-[color:var(--muted-foreground)]">日</div> : null}
         </div>
 
         <div className="mt-3">
-          <div className="relative h-3 w-full overflow-hidden rounded-full bg-rose-50">
-            <div
-              className="h-3 rounded-full bg-gradient-to-r from-rose-400 to-rose-600 transition-[width]"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="mt-1 text-xs text-zinc-500">{formatDateDisplay(trip.startDate)}</div>
+          <div className="relative h-3 w-full overflow-hidden rounded-full bg-[color:var(--primary)]/10">
+  <div
+    className="h-3 rounded-full bg-[color:var(--primary)]"
+    style={{ width: `${progress}%` }}
+  />
+</div>
+          <div className="mt-1 text-xs text-[color:var(--muted-foreground)]">{formatDateDisplay(trip.startDate)}</div>
         </div>
       </div>
 
@@ -580,8 +579,8 @@ export default function Page() {
                 className={[
                   "min-w-[52px] flex-shrink-0 rounded-xl border px-3 py-2 text-center text-xs transition",
                   active
-                    ? "border-rose-500 bg-rose-500 font-semibold text-white"
-                    : "border-zinc-200 bg-zinc-50 text-zinc-700 hover:bg-white",
+                    ? "border-rose-500 bg-rose-500 font-semibold text-[var(--primary-foreground)]"
+                    : "border-[color:var(--border)] bg-zinc-50 text-zinc-700 hover:bg-white",
                 ].join(" ")}
               >
                 <div>{`週${d.weekday}`}</div>
@@ -593,12 +592,12 @@ export default function Page() {
       </div>
 
       {/* 當日標題卡 */}
-      <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
-        <div className="text-xs text-zinc-500">{selectedDateLabel}</div>
+      <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
+        <div className="text-xs text-[color:var(--muted-foreground)]">{selectedDateLabel}</div>
         <div className="mt-1 text-lg font-bold text-zinc-900">第 {dayNum} 日</div>
 
         {/* ✅ 隱藏輸入：只顯示地點 + 按鈕 */}
-        <div className="mt-3 rounded-xl border border-zinc-200 bg-zinc-50 p-3">
+        <div className="mt-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs font-semibold text-zinc-700">當日地點</div>
@@ -607,7 +606,7 @@ export default function Page() {
               </div>
               {savedResolvedName ? (
                 <a
-                  className="mt-1 inline-flex items-center gap-1 text-xs text-rose-600 hover:underline"
+                  className="mt-1 inline-flex items-center gap-1 text-xs text-[color:var(--primary)] hover:underline"
                   href={mapsSearchUrl(savedResolvedName)}
                   target="_blank"
                   rel="noreferrer"
@@ -624,7 +623,7 @@ export default function Page() {
                 setPlaceError(null)
                 setShowPlaceModal(true)
               }}
-              className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-white px-3 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl border border-[color:var(--border)] bg-white px-3 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
             >
               {savedPlaceText ? "修改地點" : "設定地點"}
             </button>
@@ -635,20 +634,20 @@ export default function Page() {
       </div>
 
       {/* 天氣卡 */}
-      <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+      <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="rounded-2xl bg-rose-50 p-2 text-rose-600">
+          <div className="rounded-2xl bg-rose-50 p-2 text-[color:var(--primary)]">
             <WeatherIcon kind={weather?.kind ?? "cloudSun"} />
           </div>
 
           <div className="min-w-0">
-            <div className="text-sm text-zinc-500">天氣（最高 / 最低）</div>
+            <div className="text-sm text-[color:var(--muted-foreground)]">天氣（最高 / 最低）</div>
 
             {weatherLoading ? (
               <div className="mt-1 text-sm font-semibold text-zinc-900">載入中…</div>
             ) : weather ? (
               <div className="mt-1 text-lg font-extrabold text-zinc-900">
-                {weather.tempMax}°C <span className="text-sm font-semibold text-zinc-600">/ {weather.tempMin}°C</span>
+                {weather.tempMax}°C <span className="text-sm font-semibold text-[color:var(--muted-foreground)]">/ {weather.tempMin}°C</span>
               </div>
             ) : (
               <div className="mt-1 text-sm font-semibold text-zinc-900">未有天氣資料</div>
@@ -656,7 +655,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="mt-2 text-sm text-zinc-600">
+        <div className="mt-2 text-sm text-[color:var(--muted-foreground)]">
           {weatherLoading
             ? "正在更新天氣…"
             : weather
@@ -666,25 +665,25 @@ export default function Page() {
                 : "先設定當日地點，先會顯示天氣。"}
         </div>
 
-        {weather?.resolvedName ? <div className="mt-2 text-xs text-zinc-500">地點：{weather.resolvedName}</div> : null}
+        {weather?.resolvedName ? <div className="mt-2 text-xs text-[color:var(--muted-foreground)]">地點：{weather.resolvedName}</div> : null}
       </div>
 
       {/* 住宿卡 */}
-      <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+      <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-1 items-start gap-3">
-            <div className="mt-0.5 rounded-2xl bg-rose-50 p-2 text-rose-600">
+            <div className="mt-0.5 rounded-2xl bg-rose-50 p-2 text-[color:var(--primary)]">
               <BedDouble className="h-6 w-6" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-sm text-zinc-500">住宿</div>
+              <div className="text-sm text-[color:var(--muted-foreground)]">住宿</div>
               <div className="mt-1 truncate font-semibold text-zinc-900">{currentAccommodation ?? "-"}</div>
               {currentAccommodation ? (
                 <a
                   href={mapsSearchUrl(currentAccommodation)}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-1 inline-flex items-center gap-1 text-xs text-rose-600 hover:underline"
+                  className="mt-1 inline-flex items-center gap-1 text-xs text-[color:var(--primary)] hover:underline"
                 >
                   <MapPin className="h-3.5 w-3.5" />
                   Google 地圖
@@ -695,7 +694,7 @@ export default function Page() {
 
           <button
             onClick={openAccommodationEditor}
-            className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2 text-zinc-500 hover:bg-zinc-50"
+            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-white p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
             aria-label="編輯住宿"
           >
             <Pencil className="h-4 w-4" />
@@ -704,12 +703,12 @@ export default function Page() {
       </div>
 
       {/* 活動時間線 */}
-      <div className="mt-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+      <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
           <div className="text-sm font-semibold text-zinc-900">今日行程</div>
           <button
             onClick={openAddActivity}
-            className="inline-flex items-center gap-2 rounded-xl bg-rose-500 px-3 py-2 text-xs font-semibold text-white hover:bg-rose-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-rose-500 px-3 py-2 text-xs font-semibold text-[var(--primary-foreground)] hover:bg-rose-600"
           >
             <Plus className="h-4 w-4" />
             新增活動
@@ -717,7 +716,7 @@ export default function Page() {
         </div>
 
         {currentDayActivities.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-zinc-200 bg-zinc-50 p-6 text-center text-sm text-zinc-500">
+          <div className="rounded-xl border border-dashed border-[color:var(--border)] bg-zinc-50 p-6 text-center text-sm text-[color:var(--muted-foreground)]">
             今日未有活動，按「新增活動」開始規劃。
           </div>
         ) : (
@@ -733,7 +732,7 @@ export default function Page() {
 
                   <div className="flex gap-3">
                     <div className="relative mt-1">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-rose-400 to-rose-600 text-[11px] font-bold text-white">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-rose-400 to-rose-600 text-[11px] font-bold text-[var(--primary-foreground)]">
                         {item.time}
                       </div>
                     </div>
@@ -742,7 +741,7 @@ export default function Page() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
                           <div className="truncate text-sm font-semibold text-zinc-900">{item.name}</div>
-                          <div className="mt-1 flex items-center gap-2 text-xs text-zinc-600">
+                          <div className="mt-1 flex items-center gap-2 text-xs text-[color:var(--muted-foreground)]">
                             <span className={`inline-block h-2 w-2 rounded-full ${meta.dot}`} />
                             <span className="shrink-0">{meta.label}</span>
                             <span className="text-zinc-400">•</span>
@@ -753,26 +752,26 @@ export default function Page() {
                             href={mapsSearchUrl(item.location)}
                             target="_blank"
                             rel="noreferrer"
-                            className="mt-1 inline-flex items-center gap-1 text-xs text-rose-600 hover:underline"
+                            className="mt-1 inline-flex items-center gap-1 text-xs text-[color:var(--primary)] hover:underline"
                           >
                             <MapPin className="h-3.5 w-3.5" />
                             Google 地圖
                           </a>
 
-                          {item.notes ? <div className="mt-2 text-sm text-zinc-600">{item.notes}</div> : null}
+                          {item.notes ? <div className="mt-2 text-sm text-[color:var(--muted-foreground)]">{item.notes}</div> : null}
                         </div>
 
                         <div className="relative">
                           <button
                             onClick={() => setActiveActivityMenuFullIndex((v) => (v === fullIndex ? null : fullIndex))}
-                            className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white p-2 text-zinc-500 hover:bg-zinc-50"
+                            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-white p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
                             aria-label="活動選單"
                           >
                             <MoreVertical className="h-4 w-4" />
                           </button>
 
                           {activeActivityMenuFullIndex === fullIndex ? (
-                            <div className="absolute right-0 top-11 z-20 w-40 overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-lg">
+                            <div className="absolute right-0 top-11 z-20 w-40 overflow-hidden rounded-xl border border-[color:var(--border)] bg-white shadow-lg">
                               <button
                                 onClick={() => openEditActivity(fullIndex)}
                                 className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-50"
@@ -805,10 +804,10 @@ export default function Page() {
       {/* 當日地點彈窗 */}
       {showPlaceModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
             <div className="p-6">
-              <div className="text-center text-xl font-bold text-zinc-900">設定當日地點 · 第 {dayNum} 日</div>
-              <div className="mt-2 text-center text-sm text-zinc-600">{formatDateDisplay(selectedIsoDate)}</div>
+              <div className="text-center text-xl font-bold text-[color:var(--foreground)]">設定當日地點 · 第 {dayNum} 日</div>
+              <div className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">{formatDateDisplay(selectedIsoDate)}</div>
 
               <div className="mt-5 space-y-3">
                 <div>
@@ -817,10 +816,10 @@ export default function Page() {
                     value={placeDraft}
                     onChange={(e) => setPlaceDraft(e.target.value)}
                     placeholder="例如：蘇黎世 / Zurich / Shinjuku Tokyo"
-                    className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                   />
                   {placeError ? <div className="mt-2 text-xs text-red-600">{placeError}</div> : null}
-                  <div className="mt-2 text-xs text-zinc-500">
+                  <div className="mt-2 text-xs text-[color:var(--muted-foreground)]">
                     提示：地點越完整越易搵到（例如加「Tokyo」「Japan」）。
                   </div>
                 </div>
@@ -829,7 +828,7 @@ export default function Page() {
                   <button
                     onClick={handleSaveDayPlace}
                     disabled={placeSaving}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white hover:bg-rose-600 disabled:opacity-60"
+                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600 disabled:opacity-60"
                   >
                     {placeSaving ? "儲存中…" : "儲存並更新天氣"}
                   </button>
@@ -853,9 +852,9 @@ export default function Page() {
       {/* 活動彈窗 */}
       {showActivityModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
             <div className="p-6">
-              <div className="text-center text-xl font-bold text-zinc-900">
+              <div className="text-center text-xl font-bold text-[color:var(--foreground)]">
                 {editingActivityFullIndex !== null ? "編輯活動" : "新增活動"}
               </div>
 
@@ -866,7 +865,7 @@ export default function Page() {
                     type="time"
                     value={activityForm.time}
                     onChange={(e) => setActivityForm((s) => ({ ...s, time: e.target.value }))}
-                    className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                   />
                 </div>
 
@@ -876,7 +875,7 @@ export default function Page() {
                     value={activityForm.name}
                     onChange={(e) => setActivityForm((s) => ({ ...s, name: e.target.value }))}
                     placeholder="例如：淺草寺"
-                    className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                   />
                 </div>
 
@@ -886,7 +885,7 @@ export default function Page() {
                     value={activityForm.location}
                     onChange={(e) => setActivityForm((s) => ({ ...s, location: e.target.value }))}
                     placeholder="例如：Tokyo / Shinjuku"
-                    className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                   />
                 </div>
 
@@ -895,7 +894,7 @@ export default function Page() {
                   <select
                     value={activityForm.type}
                     onChange={(e) => setActivityForm((s) => ({ ...s, type: e.target.value as ActivityType }))}
-                    className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                   >
                     <option value="sightseeing">景點</option>
                     <option value="food">餐廳</option>
@@ -912,7 +911,7 @@ export default function Page() {
                     value={activityForm.notes}
                     onChange={(e) => setActivityForm((s) => ({ ...s, notes: e.target.value }))}
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full resize-none rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                     placeholder="可選填，例如：記得預約／預算"
                   />
                 </div>
@@ -920,7 +919,7 @@ export default function Page() {
                 <div className="mt-6 flex gap-3">
                   <button
                     onClick={saveActivity}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white hover:bg-rose-600"
+                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
                   >
                     儲存
                   </button>
@@ -944,9 +943,9 @@ export default function Page() {
       {/* 住宿彈窗 */}
       {showAccommodationModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-2xl">
             <div className="p-6">
-              <div className="text-center text-xl font-bold text-zinc-900">編輯住宿 · 第 {dayNum} 日</div>
+              <div className="text-center text-xl font-bold text-[color:var(--foreground)]">編輯住宿 · 第 {dayNum} 日</div>
 
               <div className="mt-5">
                 <label className="mb-1 block text-sm font-medium text-zinc-700">住宿名稱</label>
@@ -954,13 +953,13 @@ export default function Page() {
                   value={accommodationName}
                   onChange={(e) => setAccommodationName(e.target.value)}
                   placeholder="例如：Shinjuku Hotel"
-                  className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
                 />
 
                 <div className="mt-6 flex gap-3">
                   <button
                     onClick={saveAccommodation}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white hover:bg-rose-600"
+                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
                   >
                     儲存
                   </button>
@@ -980,15 +979,15 @@ export default function Page() {
       {/* 刪除確認 */}
       {showDeleteConfirm ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-2xl">
+          <div className="w-full max-w-sm overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
             <div className="p-6 text-center">
               <div className="text-lg font-bold text-zinc-900">確認刪除活動？</div>
-              <div className="mt-2 text-sm text-zinc-600">此操作無法還原。</div>
+              <div className="mt-2 text-sm text-[color:var(--muted-foreground)]">此操作無法還原。</div>
 
               <div className="mt-6 flex gap-3">
                 <button
                   onClick={confirmDeleteActivity}
-                  className="flex-1 rounded-xl bg-red-500 px-4 py-3 text-sm font-bold text-white hover:bg-red-600"
+                  className="flex-1 rounded-xl bg-red-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-red-600"
                 >
                   刪除
                 </button>

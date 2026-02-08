@@ -1,28 +1,116 @@
 @import "tailwindcss";
 
+/* -----------------------------------------
+   Global design tokens (default: 米白/beige)
+   Theme is controlled by: html[data-theme="..."]
+   ThemeSync will set data-theme from Zustand. [file:40]
+------------------------------------------ */
+
 :root {
-  --background: rgb(255, 250, 239);
-  --foreground: #ffffff;
+  /* Surfaces */
+  --background: #fff7ed; /* 米白底 */
+  --foreground: #2d3436; /* 主文字 */
+
+  --card: #ffffff;       /* 卡片底 */
+  --muted: #6b7280;      /* 次要文字 */
+  --border: #f1e3d3;     /* 邊框 */
+  --ring: rgba(188, 0, 45, 0.25);
+
+  /* Brand */
+  --primary: #bc002d;
+  --primary-foreground: #ffffff;
+  --accent: #ffb7c5;
 }
 
+/* Tailwind v4 @theme inline mapping (keep) */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #fff6ee;
-    --foreground: #000000;
-  }
+
+/* ---------- 白 (white) ---------- */
+html[data-theme="white"],
+html.white,
+body.white {
+  --background: #f8f9fa !important;
+  --foreground: #2d3436 !important;
+  --card: #ffffff !important;
+  --muted: #6b7280 !important;
+  --border: #e5e7eb !important;
+  --ring: rgba(45, 52, 54, 0.25) !important;
+  --primary: #2d3436 !important;
+  --primary-foreground: #ffffff !important;
+  --accent: #ffb7c5 !important;
 }
 
+/* ---------- 米白 (beige) ---------- */
+html[data-theme="beige"],
+html.beige,
+body.beige {
+  --background: #fff7ed !important;
+  --foreground: #2d3436 !important;
+  --card: #ffffff !important;
+  --muted: #6b7280 !important;
+  --border: #f1e3d3 !important;
+  --ring: rgba(188, 0, 45, 0.25) !important;
+  --primary: #bc002d !important;
+  --primary-foreground: #ffffff !important;
+  --accent: #ffb7c5 !important;
+}
+
+/* ---------- 粉紅米白 (pink) ---------- */
+html[data-theme="pink"],
+html.pink,
+body.pink {
+  --background: #fff1f2 !important;
+  --foreground: #2d3436 !important;
+  --card: #ffffff !important;
+  --muted: #6b7280 !important;
+  --border: #fbcfe8 !important;
+  --ring: rgba(219, 39, 119, 0.25) !important;
+  --primary: #db2777 !important;
+  --primary-foreground: #ffffff !important;
+  --accent: #fda4af !important;
+}
+
+/* ---------- 藍白 (blue) ---------- */
+html[data-theme="blue"],
+html.blue,
+body.blue {
+  --background: #eff6ff !important;
+  --foreground: #0f172a !important;
+  --card: #ffffff !important;
+  --muted: #64748b !important;
+  --border: #bfdbfe !important;
+  --ring: rgba(37, 99, 235, 0.25) !important;
+  --primary: #2563eb !important;
+  --primary-foreground: #ffffff !important;
+  --accent: #93c5fd !important;
+}
+
+/* ---------- 黑 (black) ---------- */
+html[data-theme="black"],
+html.black,
+body.black {
+  --background: #0b0f14 !important;
+  --foreground: #f3f4f6 !important;
+  --card: #111827 !important;
+  --muted: #9ca3af !important;
+  --border: #1f2937 !important;
+  --ring: rgba(255, 183, 197, 0.25) !important;
+  --primary: #ffb7c5 !important;
+  --primary-foreground: #0b0f14 !important;
+  --accent: #bc002d !important;
+}
+
+/* Apply base colors */
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--background) !important;
+  color: var(--foreground) !important;
 }
 
 input::placeholder {
-  color: #6b7280;
+  color: var(--muted) !important;
   opacity: 1;
 }

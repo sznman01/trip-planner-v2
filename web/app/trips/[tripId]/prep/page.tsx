@@ -705,7 +705,7 @@ useEffect(() => {
       {/* ===== Prep tab ===== */}
       {tab === "prep" ? (
         <section className="mt-4">
-          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-white shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-[var(--primary-foreground)] shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-base font-bold">出發前檢查清單</div>
@@ -714,7 +714,7 @@ useEffect(() => {
               <button
                 type="button"
                 onClick={openChecklistCreate}
-                className="rounded-full bg-white px-3 py-1.5 text-sm font-bold text-rose-600 shadow-sm hover:bg-rose-50"
+                className="rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[color:var(--primary)] shadow-sm hover:bg-rose-50"
               >
                 + 新增
               </button>
@@ -763,7 +763,7 @@ useEffect(() => {
                               onClick={() => toggleChecklistCompleted(item.id)}
                               className={`h-6 w-6 shrink-0 rounded-md border-2 ${
                                 item.completed
-                                  ? "border-rose-500 bg-rose-500 text-white"
+                                  ? "border-rose-500 bg-rose-500 text-[var(--primary-foreground)]"
                                   : "border-gray-200 bg-gray-50 text-transparent"
                               }`}
                               aria-label="Toggle completed"
@@ -819,7 +819,7 @@ useEffect(() => {
                                   </button>
                                   <button
                                     type="button"
-                                    className="block w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-gray-50"
+                                    className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary)] hover:bg-gray-50"
                                     onClick={() => deleteChecklistItem(item.id)}
                                   >
                                     刪除
@@ -911,7 +911,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={saveChecklistItem}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>
@@ -934,7 +934,7 @@ useEffect(() => {
       {/* ===== Members tab ===== */}
       {tab === "members" ? (
         <section className="mt-4">
-          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-white shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-[var(--primary-foreground)] shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-base font-bold">成員結算（HKD）</div>
@@ -946,7 +946,7 @@ useEffect(() => {
                 type="button"
                 onClick={openMemberCreate}
                 disabled={members.length >= 10}
-                className={`rounded-full bg-white px-3 py-1.5 text-sm font-bold text-rose-600 shadow-sm hover:bg-rose-50 ${
+                className={`rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[color:var(--primary)] shadow-sm hover:bg-rose-50 ${
                   members.length >= 10 ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
@@ -1019,7 +1019,7 @@ useEffect(() => {
                           </button>
                           <button
                             type="button"
-                            className="block w-full px-4 py-2 text-left text-sm text-rose-600 hover:bg-gray-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary)] hover:bg-gray-50"
                             onClick={() => deleteMember(m.id)}
                           >
                             刪除
@@ -1130,7 +1130,7 @@ useEffect(() => {
                             <div className="min-w-0 truncate text-gray-700">
                               {p.date} · {p.description}
                             </div>
-                            <div className="shrink-0 font-semibold text-rose-600">
+                            <div className="shrink-0 font-semibold text-[color:var(--primary)]">
                               {formatCurrencyHKD(p.amountHKD)}
                             </div>
                           </div>
@@ -1147,7 +1147,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={saveMember}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>
@@ -1257,7 +1257,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={savePayment}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-white shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>

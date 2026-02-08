@@ -25,7 +25,7 @@ export default function BottomTabBar() {
   ];
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t border-zinc-200 bg-white/90 pb-[env(safe-area-inset-bottom)] backdrop-blur shadow-[0_-8px_24px_rgba(0,0,0,0.08)]">
+    <nav className="fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t border-[color:var(--border)] bg-white/90 pb-[env(safe-area-inset-bottom)] backdrop-blur shadow-[0_-8px_24px_rgba(0,0,0,0.08)]">
       <div className="mx-auto grid max-w-md grid-cols-5">
         {tabs.map((t) => {
           const active = isActive(t.href);

@@ -76,7 +76,7 @@ export function CategoryDonut({ expenses }: { expenses: ExpenseLike[] }) {
         <div className="pointer-events-none absolute inset-0 grid place-items-center">
           <div className="text-center">
             <div className="text-[11px] text-slate-500">已花費</div>
-            <div className="text-sm font-extrabold text-slate-900">{total.toLocaleString("zh-HK")}</div>
+            <div className="text-sm font-extrabold text-[var(--foreground)]">{total.toLocaleString("zh-HK")}</div>
           </div>
         </div>
       </div>

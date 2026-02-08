@@ -105,7 +105,15 @@ export function TripCard({ trip, onDelete }: Props) {
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border bg-white shadow-sm">
+  <div
+    className="
+      overflow-hidden rounded-3xl
+      border border-[color:var(--border)]
+      bg-[color:var(--card)]
+      shadow-sm
+    "
+  >
+
       {/* cover */}
       <div className="relative">
         {trip.coverImage ? (

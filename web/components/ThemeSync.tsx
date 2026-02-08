@@ -7,7 +7,9 @@ export default function ThemeSync() {
   const theme = useThemeStore((s) => s.theme);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    const html = document.documentElement;
+    html.dataset.theme = theme;       // ✅ 只改 data-theme
+    console.log("✅ Theme applied:", theme);
   }, [theme]);
 
   return null;

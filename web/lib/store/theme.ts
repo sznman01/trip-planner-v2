@@ -1,31 +1,30 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export type ThemeName = "sakura" | "matcha" | "dark";
+export type ThemeName = "white" | "beige" | "pink" | "blue" | "black";
 
-type ThemeState = {
+interface ThemeState {
   theme: ThemeName;
-  setTheme: (t: ThemeName) => void;
-  cycleTheme: () => void;
-};
+  setTheme: (theme: ThemeName) => void;
+  cycleTheme: () => void; // ✅ 加返
+}
 
-const ORDER: ThemeName[] = ["sakura", "matcha", "dark"];
-
-export const useThemeStore = create<ThemeState>()(
-  persist(
+export const useThemeStore = create(
+  persist<ThemeState>(
     (set, get) => ({
-      theme: "sakura",
-      setTheme: (t) => set({ theme: t }),
-      cycleTheme: () => {
-        const cur = get().theme;
-        const idx = ORDER.indexOf(cur);
-        const next = ORDER[(idx + 1 + ORDER.length) % ORDER.length] ?? "sakura";
-        set({ theme: next });
+      theme: "beige",
+      setTheme: (newTheme: ThemeName) => {
+        set({ theme: newTheme });
+        console.log("Theme changed to:", newTheme);
+      },
+      cycleTheme: () => { // ✅ 實作
+        const themes: ThemeName[] = ["white", "beige", "pink", "blue", "black"];
+        const current = get().theme;
+        const currentIndex = themes.indexOf(current);
+        const nextIndex = (currentIndex + 1) % themes.length;
+        set({ theme: themes[nextIndex] });
       },
     }),
-    {
-      name: "theme_v1",
-      version: 1,
-    }
+    { name: "travel-theme" }
   )
 );

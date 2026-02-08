@@ -234,7 +234,7 @@ const updateActivity = useCallback((
           </button>
           <button
             type="button"
-            className={`flex-1 rounded-xl px-3 py-2 text-sm text-white ${
+            className={`flex-1 rounded-xl px-3 py-2 text-sm text-[var(--primary-foreground)] ${
               canSubmit ? "bg-black" : "bg-gray-300"
             }`}
             onClick={handleSubmit}

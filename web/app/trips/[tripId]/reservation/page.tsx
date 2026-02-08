@@ -117,7 +117,7 @@ function Modal(props: {
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
           className={[
-            'w-full rounded-3xl border border-slate-200 bg-white shadow-xl',
+            'w-full rounded-3xl border border-[var(--border)] bg-white shadow-xl',
             'max-h-[85vh] overflow-y-auto',
             props.maxWidthClassName ?? 'max-w-md',
           ].join(' ')}
@@ -126,7 +126,7 @@ function Modal(props: {
         >
           <div className="flex items-start justify-between gap-3 px-6 py-5 border-b border-slate-100">
             <div>
-              <h2 className="text-lg font-semibold text-slate-900">{props.title}</h2>
+              <h2 className="text-lg font-semibold text-[var(--foreground)]">{props.title}</h2>
               <p className="mt-1 text-xs text-slate-500">資料會儲存在本地（LocalStorage persist）。</p>
             </div>
             <button
@@ -341,9 +341,9 @@ export default function ReservationPage() {
   if (!tripId) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="text-lg font-semibold text-slate-900">tripId 無效</h1>
-          <p className="mt-2 text-sm text-slate-600">請確認路由係 /trips/[tripId]/reservation。</p>
+        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
+          <h1 className="text-lg font-semibold text-[var(--foreground)]">tripId 無效</h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">請確認路由係 /trips/[tripId]/reservation。</p>
           <div className="mt-4">
             
           </div>
@@ -355,9 +355,9 @@ export default function ReservationPage() {
   if (!trip || !reservations) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h1 className="text-lg font-semibold text-slate-900">找不到旅程</h1>
-          <p className="mt-2 text-sm text-slate-600">呢個 tripId 可能唔存在，或者資料未載入完成。</p>
+        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
+          <h1 className="text-lg font-semibold text-[var(--foreground)]">找不到旅程</h1>
+          <p className="mt-2 text-sm text-[var(--muted)]">呢個 tripId 可能唔存在，或者資料未載入完成。</p>
           <div className="mt-4">
             
           </div>
@@ -373,15 +373,15 @@ export default function ReservationPage() {
         <div className="min-w-0">
           <div className="flex items-center gap-3">
            
-            <h1 className="truncate text-xl font-semibold text-slate-900">預約</h1>
+            <h1 className="truncate text-xl font-semibold text-[var(--foreground)]">預約</h1>
           </div>
-          <p className="mt-2 text-sm text-slate-600 truncate">{trip.title ? `旅程：${trip.title}` : `Trip ID：${trip.id}`}</p>
+          <p className="mt-2 text-sm text-[var(--muted)] truncate">{trip.title ? `旅程：${trip.title}` : `Trip ID：${trip.id}`}</p>
         </div>
 
         <button
           type="button"
           onClick={() => setTypePickerOpen(true)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#BC002D] text-white shadow-sm hover:opacity-95"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#BC002D] text-[var(--primary-foreground)] shadow-sm hover:opacity-95"
           aria-label="新增預約"
         >
           <Plus className="h-5 w-5" />
@@ -392,7 +392,7 @@ export default function ReservationPage() {
       <section className="mb-8">
         <div className="mb-3 flex items-center gap-2">
           <Plane className="h-4 w-4 text-slate-700" />
-          <h2 className="text-sm font-semibold text-slate-900">航班</h2>
+          <h2 className="text-sm font-semibold text-[var(--foreground)]">航班</h2>
         </div>
 
         {reservations.flights.length > 0 ? (
@@ -401,8 +401,8 @@ export default function ReservationPage() {
               const isOpen = activeMenu?.type === 'flight' && activeMenu.idx === idx;
 
               return (
-                <div key={`flight-${idx}`} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-                  <div className="flex items-center justify-between bg-gradient-to-r from-[#BC002D] to-[#E24A6A] px-4 py-3 text-white">
+                <div key={`flight-${idx}`} className="overflow-hidden rounded-3xl border border-[var(--border)] bg-white shadow-sm">
+                  <div className="flex items-center justify-between bg-gradient-to-r from-[#BC002D] to-[#E24A6A] px-4 py-3 text-[var(--primary-foreground)]">
                     <span className="text-[11px] font-semibold tracking-widest">BOARDING PASS</span>
 
                     <div className="relative">
@@ -418,7 +418,7 @@ export default function ReservationPage() {
                       </button>
 
                       {isOpen && (
-                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-lg">
                           <button
                             type="button"
                             onClick={() => onEdit('flight', idx)}
@@ -441,8 +441,8 @@ export default function ReservationPage() {
                   <div className="p-4">
                     <div className="grid grid-cols-3 items-center gap-3">
                       <div className="min-w-0">
-                        <div className="text-lg font-semibold text-slate-900">{airportCode(flight.departureLocation)}</div>
-                        <div className="mt-1 text-xs text-slate-600">{formatTimeOnly(flight.departureTime)}</div>
+                        <div className="text-lg font-semibold text-[var(--foreground)]">{airportCode(flight.departureLocation)}</div>
+                        <div className="mt-1 text-xs text-[var(--muted)]">{formatTimeOnly(flight.departureTime)}</div>
                       </div>
 
                       <div className="flex flex-col items-center justify-center">
@@ -453,8 +453,8 @@ export default function ReservationPage() {
                       </div>
 
                       <div className="min-w-0 text-right">
-                        <div className="text-lg font-semibold text-slate-900">{airportCode(flight.arrivalLocation)}</div>
-                        <div className="mt-1 text-xs text-slate-600">{formatTimeOnly(flight.arrivalTime)}</div>
+                        <div className="text-lg font-semibold text-[var(--foreground)]">{airportCode(flight.arrivalLocation)}</div>
+                        <div className="mt-1 text-xs text-[var(--muted)]">{formatTimeOnly(flight.arrivalTime)}</div>
                       </div>
                     </div>
 
@@ -463,7 +463,7 @@ export default function ReservationPage() {
                         {flight.notes ? <div className="rounded-2xl bg-slate-50 p-3 text-sm text-slate-700">{flight.notes}</div> : null}
 
                         {flight.certificate ? (
-                          <a href={flight.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-slate-200" title="打開證明圖片">
+                          <a href={flight.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-[var(--border)]" title="打開證明圖片">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img src={flight.certificate} alt={flight.flightNumber} className="w-full object-cover" />
                           </a>
@@ -481,7 +481,7 @@ export default function ReservationPage() {
             })}
           </div>
         ) : (
-          <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">暫時未有航班預約</div>
+          <div className="rounded-3xl border border-dashed border-[var(--border)] bg-white p-6 text-center text-sm text-slate-500">暫時未有航班預約</div>
         )}
       </section>
 
@@ -489,7 +489,7 @@ export default function ReservationPage() {
       <section className="mb-8">
         <div className="mb-3 flex items-center gap-2">
           <Hotel className="h-4 w-4 text-slate-700" />
-          <h2 className="text-sm font-semibold text-slate-900">酒店</h2>
+          <h2 className="text-sm font-semibold text-[var(--foreground)]">酒店</h2>
         </div>
 
         {reservations.hotels.length > 0 ? (
@@ -499,14 +499,14 @@ export default function ReservationPage() {
               const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(hotel.name)}`;
 
               return (
-                <div key={`hotel-${idx}`} className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                <div key={`hotel-${idx}`} className="rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <a href={mapUrl} target="_blank" rel="noreferrer" className="truncate text-sm font-semibold text-[#BC002D] hover:underline">
                         {hotel.name}
                       </a>
-                      <p className="mt-1 text-xs text-slate-600">{hotel.address}</p>
-                      <p className="mt-1 text-xs text-slate-600">
+                      <p className="mt-1 text-xs text-[var(--muted)]">{hotel.address}</p>
+                      <p className="mt-1 text-xs text-[var(--muted)]">
                         {hotel.checkInDate} → {hotel.checkOutDate}
                         {hotel.checkOutTime ? `（退房 ${hotel.checkOutTime}）` : ''}
                       </p>
@@ -518,14 +518,14 @@ export default function ReservationPage() {
                         onClick={() =>
                           setActiveMenu((cur) => (cur?.type === 'hotel' && cur.idx === idx ? null : { type: 'hotel', idx }))
                         }
-                        className="rounded-xl p-2 text-slate-600 hover:bg-slate-50"
+                        className="rounded-xl p-2 text-[var(--muted)] hover:bg-slate-50"
                         aria-label="酒店選單"
                       >
                         <MoreHorizontal className="h-4 w-4" />
                       </button>
 
                       {isOpen && (
-                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-lg">
                           <button
                             type="button"
                             onClick={() => onEdit('hotel', idx)}
@@ -550,7 +550,7 @@ export default function ReservationPage() {
                       {hotel.notes ? <div className="rounded-2xl bg-slate-50 p-3 text-sm text-slate-700">{hotel.notes}</div> : null}
 
                       {hotel.certificate ? (
-                        <a href={hotel.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-slate-200" title="打開證明圖片">
+                        <a href={hotel.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-[var(--border)]" title="打開證明圖片">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={hotel.certificate} alt={hotel.name} className="w-full object-cover" />
                         </a>
@@ -562,7 +562,7 @@ export default function ReservationPage() {
             })}
           </div>
         ) : (
-          <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">暫時未有酒店預約</div>
+          <div className="rounded-3xl border border-dashed border-[var(--border)] bg-white p-6 text-center text-sm text-slate-500">暫時未有酒店預約</div>
         )}
       </section>
 
@@ -570,7 +570,7 @@ export default function ReservationPage() {
       <section className="mb-10">
         <div className="mb-3 flex items-center gap-2">
           <Ticket className="h-4 w-4 text-slate-700" />
-          <h2 className="text-sm font-semibold text-slate-900">票券</h2>
+          <h2 className="text-sm font-semibold text-[var(--foreground)]">票券</h2>
         </div>
 
         {reservations.tickets.length > 0 ? (
@@ -579,11 +579,11 @@ export default function ReservationPage() {
               const isOpen = activeMenu?.type === 'ticket' && activeMenu.idx === idx;
 
               return (
-                <div key={`ticket-${idx}`} className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+                <div key={`ticket-${idx}`} className="rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-slate-900">{ticket.name}</p>
-                      <p className="mt-1 text-xs text-slate-600">
+                      <p className="truncate text-sm font-semibold text-[var(--foreground)]">{ticket.name}</p>
+                      <p className="mt-1 text-xs text-[var(--muted)]">
                         {ticket.date} {ticket.time}
                       </p>
                     </div>
@@ -594,14 +594,14 @@ export default function ReservationPage() {
                         onClick={() =>
                           setActiveMenu((cur) => (cur?.type === 'ticket' && cur.idx === idx ? null : { type: 'ticket', idx }))
                         }
-                        className="rounded-xl p-2 text-slate-600 hover:bg-slate-50"
+                        className="rounded-xl p-2 text-[var(--muted)] hover:bg-slate-50"
                         aria-label="票券選單"
                       >
                         <MoreHorizontal className="h-4 w-4" />
                       </button>
 
                       {isOpen && (
-                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+                        <div className="absolute right-0 top-11 z-10 w-40 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-lg">
                           <button
                             type="button"
                             onClick={() => onEdit('ticket', idx)}
@@ -626,7 +626,7 @@ export default function ReservationPage() {
                       {ticket.notes ? <div className="rounded-2xl bg-slate-50 p-3 text-sm text-slate-700">{ticket.notes}</div> : null}
 
                       {ticket.certificate ? (
-                        <a href={ticket.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-slate-200" title="打開證明圖片">
+                        <a href={ticket.certificate} target="_blank" rel="noreferrer" className="block overflow-hidden rounded-2xl border border-[var(--border)]" title="打開證明圖片">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={ticket.certificate} alt={ticket.name} className="w-full object-cover" />
                         </a>
@@ -638,39 +638,39 @@ export default function ReservationPage() {
             })}
           </div>
         ) : (
-          <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-6 text-center text-sm text-slate-500">暫時未有票券預約</div>
+          <div className="rounded-3xl border border-dashed border-[var(--border)] bg-white p-6 text-center text-sm text-slate-500">暫時未有票券預約</div>
         )}
       </section>
 
       {/* Type picker */}
       <Modal open={typePickerOpen} title="新增預約" onClose={() => setTypePickerOpen(false)}>
         <div className="space-y-3">
-          <button type="button" onClick={openAddFlight} className="w-full rounded-2xl border border-slate-200 bg-white p-4 text-left hover:bg-slate-50">
+          <button type="button" onClick={openAddFlight} className="w-full rounded-2xl border border-[var(--border)] bg-white p-4 text-left hover:bg-slate-50">
             <div className="flex items-center gap-3">
               <Plane className="h-5 w-5 text-slate-700" />
               <div>
-                <div className="text-sm font-semibold text-slate-900">新增航班</div>
-                <div className="mt-1 text-xs text-slate-600">航班號、起飛/到達、證明圖片</div>
+                <div className="text-sm font-semibold text-[var(--foreground)]">新增航班</div>
+                <div className="mt-1 text-xs text-[var(--muted)]">航班號、起飛/到達、證明圖片</div>
               </div>
             </div>
           </button>
 
-          <button type="button" onClick={openAddHotel} className="w-full rounded-2xl border border-slate-200 bg-white p-4 text-left hover:bg-slate-50">
+          <button type="button" onClick={openAddHotel} className="w-full rounded-2xl border border-[var(--border)] bg-white p-4 text-left hover:bg-slate-50">
             <div className="flex items-center gap-3">
               <Hotel className="h-5 w-5 text-slate-700" />
               <div>
-                <div className="text-sm font-semibold text-slate-900">新增酒店</div>
-                <div className="mt-1 text-xs text-slate-600">地址、入住/退房、證明圖片</div>
+                <div className="text-sm font-semibold text-[var(--foreground)]">新增酒店</div>
+                <div className="mt-1 text-xs text-[var(--muted)]">地址、入住/退房、證明圖片</div>
               </div>
             </div>
           </button>
 
-          <button type="button" onClick={openAddTicket} className="w-full rounded-2xl border border-slate-200 bg-white p-4 text-left hover:bg-slate-50">
+          <button type="button" onClick={openAddTicket} className="w-full rounded-2xl border border-[var(--border)] bg-white p-4 text-left hover:bg-slate-50">
             <div className="flex items-center gap-3">
               <Ticket className="h-5 w-5 text-slate-700" />
               <div>
-                <div className="text-sm font-semibold text-slate-900">新增票券</div>
-                <div className="mt-1 text-xs text-slate-600">日期/時間、證明圖片</div>
+                <div className="text-sm font-semibold text-[var(--foreground)]">新增票券</div>
+                <div className="mt-1 text-xs text-[var(--muted)]">日期/時間、證明圖片</div>
               </div>
             </div>
           </button>
@@ -678,7 +678,7 @@ export default function ReservationPage() {
           <button
             type="button"
             onClick={() => setTypePickerOpen(false)}
-            className="w-full rounded-2xl border border-slate-200 bg-slate-100 p-4 text-sm font-semibold text-slate-700 hover:opacity-90"
+            className="w-full rounded-2xl border border-[var(--border)] bg-slate-100 p-4 text-sm font-semibold text-slate-700 hover:opacity-90"
           >
             取消
           </button>
@@ -700,7 +700,7 @@ export default function ReservationPage() {
             <input
               value={flightForm.flightNumber}
               onChange={(e) => setFlightForm((p) => ({ ...p, flightNumber: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="CX880"
             />
           </div>
@@ -710,7 +710,7 @@ export default function ReservationPage() {
             <input
               value={flightForm.departureLocation}
               onChange={(e) => setFlightForm((p) => ({ ...p, departureLocation: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="Hong Kong"
             />
           </div>
@@ -720,7 +720,7 @@ export default function ReservationPage() {
             <input
               value={flightForm.arrivalLocation}
               onChange={(e) => setFlightForm((p) => ({ ...p, arrivalLocation: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="Tokyo"
             />
           </div>
@@ -731,7 +731,7 @@ export default function ReservationPage() {
               type="datetime-local"
               value={flightForm.departureTime}
               onChange={(e) => setFlightForm((p) => ({ ...p, departureTime: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -741,7 +741,7 @@ export default function ReservationPage() {
               type="datetime-local"
               value={flightForm.arrivalTime}
               onChange={(e) => setFlightForm((p) => ({ ...p, arrivalTime: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -762,10 +762,10 @@ export default function ReservationPage() {
                   e.target.value = '';
                 }
               }}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-2 text-sm"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-2 text-sm"
             />
             {flightForm.certificate ? (
-              <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200">
+              <div className="mt-3 overflow-hidden rounded-2xl border border-[var(--border)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={flightForm.certificate} alt="flight certificate preview" className="w-full object-cover" />
               </div>
@@ -778,13 +778,13 @@ export default function ReservationPage() {
               value={flightForm.notes ?? ''}
               onChange={(e) => setFlightForm((p) => ({ ...p, notes: e.target.value }))}
               rows={3}
-              className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：行李、座位、登機口..."
             />
           </div>
 
           <div className="flex gap-3 pt-1">
-            <button type="button" onClick={saveFlight} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-white hover:opacity-95">
+            <button type="button" onClick={saveFlight} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95">
               儲存
             </button>
             <button
@@ -816,7 +816,7 @@ export default function ReservationPage() {
             <input
               value={hotelForm.name}
               onChange={(e) => setHotelForm((p) => ({ ...p, name: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="Shinjuku Hotel"
             />
           </div>
@@ -826,7 +826,7 @@ export default function ReservationPage() {
             <input
               value={hotelForm.address}
               onChange={(e) => setHotelForm((p) => ({ ...p, address: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="Tokyo, Japan..."
             />
           </div>
@@ -837,7 +837,7 @@ export default function ReservationPage() {
               type="date"
               value={hotelForm.checkInDate}
               onChange={(e) => setHotelForm((p) => ({ ...p, checkInDate: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -847,7 +847,7 @@ export default function ReservationPage() {
               type="date"
               value={hotelForm.checkOutDate}
               onChange={(e) => setHotelForm((p) => ({ ...p, checkOutDate: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -857,7 +857,7 @@ export default function ReservationPage() {
               type="time"
               value={hotelForm.checkOutTime ?? ''}
               onChange={(e) => setHotelForm((p) => ({ ...p, checkOutTime: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -878,10 +878,10 @@ export default function ReservationPage() {
                   e.target.value = '';
                 }
               }}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-2 text-sm"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-2 text-sm"
             />
             {hotelForm.certificate ? (
-              <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200">
+              <div className="mt-3 overflow-hidden rounded-2xl border border-[var(--border)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={hotelForm.certificate} alt="hotel certificate preview" className="w-full object-cover" />
               </div>
@@ -894,13 +894,13 @@ export default function ReservationPage() {
               value={hotelForm.notes ?? ''}
               onChange={(e) => setHotelForm((p) => ({ ...p, notes: e.target.value }))}
               rows={3}
-              className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：房型、訂單號、特殊要求..."
             />
           </div>
 
           <div className="flex gap-3 pt-1">
-            <button type="button" onClick={saveHotel} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-white hover:opacity-95">
+            <button type="button" onClick={saveHotel} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95">
               儲存
             </button>
             <button
@@ -932,7 +932,7 @@ export default function ReservationPage() {
             <input
               value={ticketForm.name}
               onChange={(e) => setTicketForm((p) => ({ ...p, name: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：TeamLab / USJ Express Pass"
             />
           </div>
@@ -943,7 +943,7 @@ export default function ReservationPage() {
               type="date"
               value={ticketForm.date}
               onChange={(e) => setTicketForm((p) => ({ ...p, date: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -953,7 +953,7 @@ export default function ReservationPage() {
               type="time"
               value={ticketForm.time}
               onChange={(e) => setTicketForm((p) => ({ ...p, time: e.target.value }))}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
@@ -974,10 +974,10 @@ export default function ReservationPage() {
                   e.target.value = '';
                 }
               }}
-              className="w-full rounded-2xl border border-slate-200 bg-white p-2 text-sm"
+              className="w-full rounded-2xl border border-[var(--border)] bg-white p-2 text-sm"
             />
             {ticketForm.certificate ? (
-              <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200">
+              <div className="mt-3 overflow-hidden rounded-2xl border border-[var(--border)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={ticketForm.certificate} alt="ticket certificate preview" className="w-full object-cover" />
               </div>
@@ -990,13 +990,13 @@ export default function ReservationPage() {
               value={ticketForm.notes ?? ''}
               onChange={(e) => setTicketForm((p) => ({ ...p, notes: e.target.value }))}
               rows={3}
-              className="w-full resize-none rounded-2xl border border-slate-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：入場時間、集合地點..."
             />
           </div>
 
           <div className="flex gap-3 pt-1">
-            <button type="button" onClick={saveTicket} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-white hover:opacity-95">
+            <button type="button" onClick={saveTicket} className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95">
               儲存
             </button>
             <button
