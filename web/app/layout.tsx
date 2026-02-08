@@ -7,7 +7,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: '日本旅遊規劃',
-  description: 'Trip Planner'
+  description: 'Trip Planner',
+   icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 }
 
 export default function RootLayout({
