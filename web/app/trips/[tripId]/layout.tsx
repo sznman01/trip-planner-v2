@@ -1,6 +1,6 @@
+export const dynamic = 'force-dynamic';
 import BottomTabBar from "@/components/BottomTabBar";
 
-export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
