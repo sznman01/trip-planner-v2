@@ -403,7 +403,7 @@ export default function ReservationPage() {
               return (
                 <div key={`flight-${idx}`} className="overflow-hidden rounded-3xl border border-[var(--border)] bg-card shadow-sm">
                   <div className="flex items-center justify-between bg-gradient-to-r from-[color:var(--hero-from)] to-[color:var(--hero-to)] text-[color:var(--primary-foreground)]">
-                    <span className="text-[11px] font-semibold tracking-widest">BOARDING PASS</span>
+                    <span className="ml-[16px] text-[11px] font-semibold tracking-widest">BOARDING PASS</span>
 
                     <div className="relative">
                       <button

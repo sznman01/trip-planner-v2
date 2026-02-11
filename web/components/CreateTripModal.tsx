@@ -310,9 +310,9 @@ export function CreateTripModal(props: Props) {
         border: "2px dashed color-mix(in srgb, var(--border) 70%, var(--primary) 30%)",
         borderRadius: 16,
         padding: 16,
-         background: "var(--card)",
+        background: "var(--card)",
         fontWeight: 700,
-         color: "var(--foreground)",
+        color: "var(--foreground)",
       }}
       type="button"
     >

@@ -58,11 +58,15 @@ body.white {
   --muted: #6b7280 !important;
   --border: #e5e7eb !important;
   --ring: rgba(45, 52, 54, 0.25) !important;
-  --primary: #2d3436 !important;
-  --primary-foreground: #ffffff !important;
-  --accent: #ffb7c5 !important;
-   --hero-from: #1d1d1d;
-  --hero-to: #161616;
+  --primary: #c76b6b !important;
+  --primary-foreground: #000000 !important;
+  --accent: #fff5f7 !important;
+   --hero-from: #ffffff;
+  --hero-to: #ffd3d3;
+  --overlay: rgba(255, 192, 192, 0.5);
+  --menu-btn-bg: #ffffff;
+  --menu-btn-fg: #383838;      /* 或 #2D3436 */
+  --menu-btn-border: #ffffff;
 }
 
 /* ---------- 米白 (beige) ---------- */
@@ -75,11 +79,15 @@ body.beige {
   --muted: #6b7280 !important;
   --border: #f1e3d3 !important;
   --ring: rgba(188, 0, 45, 0.25) !important;
-  --primary: #bc002d !important;
-  --primary-foreground: #ffffff !important;
+  --primary: #ffbc7d !important;
+  --primary-foreground: #000000 !important;
   --accent: #ffb7c5 !important;
-   --hero-from: #1d1d1d;
-  --hero-to: #161616;
+   --hero-from: #fff8ce;
+  --hero-to: #ffecb9;
+    --overlay: rgba(0,0,0,0.5);
+  --menu-btn-bg: #ffebd1;
+  --menu-btn-fg: #111827;      /* 或 #2D3436 */
+  --menu-btn-border: #fff2e2;
 }
 
 /* ---------- 粉紅米白 (pink) ---------- */
@@ -92,28 +100,36 @@ body.pink {
   --muted: #6b7280 !important;
   --border: #fbcfe8 !important;
   --ring: rgba(219, 39, 119, 0.25) !important;
-  --primary: #db2777 !important;
+  --primary: #b65b5b !important;
   --primary-foreground: #ffffff !important;
   --accent: #fda4af !important;
-   --hero-from: #1d1d1d;
-  --hero-to: #161616;
+   --hero-from: #ffb4b4;
+  --hero-to: #ffc8c8;
+    --overlay: rgba(0,0,0,0.5);
+  --menu-btn-bg: #ffdede;
+  --menu-btn-fg: #111827;      /* 或 #2D3436 */
+  --menu-btn-border: #E5E7EB;
 }
 
 /* ---------- 藍白 (blue) ---------- */
 html[data-theme="blue"],
 html.blue,
 body.blue {
-  --background: #eff6ff !important;
-  --foreground: #0f172a !important;
-  --card: #77c4f7 !important;
-  --muted: #64748b !important;
-  --border: #bfdbfe !important;
-  --ring: rgba(37, 99, 235, 0.25) !important;
-  --primary: #2563eb !important;
-  --primary-foreground: #ffffff !important;
-  --accent: #93c5fd !important;
-   --hero-from: #1d1d1d;
-  --hero-to: #161616;
+  --background: #b8e9ff !important;
+  --foreground: #00143f !important;
+  --card: #c3e7ff !important;
+  --muted: #124183 !important;
+  --border: #00224b94 !important;
+  --ring: rgba(0, 49, 155, 0.61) !important;
+  --primary: #54adc9 !important;
+  --primary-foreground: #001342 !important;
+  --accent: #124183 !important;
+   --hero-from: #3f6dc4;
+  --hero-to: #88b8ff;
+  --overlay: rgba(0,0,0,0.5);
+  --menu-btn-bg: #001558;
+  --menu-btn-fg: #bdc1c9;      /* 或 #2D3436 */
+  --menu-btn-border: #ffffff;
 }
 
 /* ---------- 黑 (black) ---------- */
