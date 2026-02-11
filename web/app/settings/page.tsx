@@ -50,9 +50,9 @@ const isDark = theme === "black";
         type="button"
         onClick={() => setTheme(t.id)}
         className={[
-          "h-14 w-14 shrink-0 rounded-full border transition",
+          "h-9 w-15 shrink-0 rounded-full border transition",
           active
-            ? "ring-4 ring-[color:var(--ring)] border-[color:var(--primary)]"
+            ? "ring-1 ring-[color:var(--ring)] border-[color:var(--primary)]"
             : "border-[color:var(--border)]",
         ].join(" ")}
         aria-label={`主題：${t.label}`}
