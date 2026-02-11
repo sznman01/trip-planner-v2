@@ -50,7 +50,7 @@ html.beige,
 body.beige {
   --background: #fff7ed !important;
   --foreground: #2d3436 !important;
-  --card: #ffffff !important;
+  --card: #fff2e2 !important;
   --muted: #6b7280 !important;
   --border: #f1e3d3 !important;
   --ring: rgba(188, 0, 45, 0.25) !important;
@@ -65,7 +65,7 @@ html.pink,
 body.pink {
   --background: #fff1f2 !important;
   --foreground: #2d3436 !important;
-  --card: #ffffff !important;
+  --card: #ffdede !important;
   --muted: #6b7280 !important;
   --border: #fbcfe8 !important;
   --ring: rgba(219, 39, 119, 0.25) !important;
@@ -80,7 +80,7 @@ html.blue,
 body.blue {
   --background: #eff6ff !important;
   --foreground: #0f172a !important;
-  --card: #ffffff !important;
+  --card: #77c4f7 !important;
   --muted: #64748b !important;
   --border: #bfdbfe !important;
   --ring: rgba(37, 99, 235, 0.25) !important;
@@ -95,7 +95,7 @@ html.black,
 body.black {
   --background: #0b0f14 !important;
   --foreground: #f3f4f6 !important;
-  --card: #111827 !important;
+  --card: #353b47 !important;
   --muted: #9ca3af !important;
   --border: #1f2937 !important;
   --ring: rgba(255, 183, 197, 0.25) !important;
@@ -113,4 +113,12 @@ body {
 input::placeholder {
   color: var(--muted) !important;
   opacity: 1;
+
+  /* Prevent iOS Safari auto-zoom on form focus */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
 }

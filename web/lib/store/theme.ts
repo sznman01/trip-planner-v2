@@ -9,22 +9,20 @@ interface ThemeState {
   cycleTheme: () => void; // ✅ 加返
 }
 
-export const useThemeStore = create(
-  persist<ThemeState>(
+const ORDER: ThemeName[] = ["white", "beige", "pink", "blue", "black"];
+
+export const useThemeStore = create<ThemeState>()(
+  persist(
     (set, get) => ({
       theme: "beige",
-      setTheme: (newTheme: ThemeName) => {
-        set({ theme: newTheme });
-        console.log("Theme changed to:", newTheme);
-      },
-      cycleTheme: () => { // ✅ 實作
-        const themes: ThemeName[] = ["white", "beige", "pink", "blue", "black"];
-        const current = get().theme;
-        const currentIndex = themes.indexOf(current);
-        const nextIndex = (currentIndex + 1) % themes.length;
-        set({ theme: themes[nextIndex] });
+          setTheme: (theme) => set({ theme }),
+      cycleTheme: () => {
+        const cur = get().theme;
+        const idx = ORDER.indexOf(cur);
+        const next = ORDER[(idx + 1 + ORDER.length) % ORDER.length] ?? "beige";
+        set({ theme: next });
       },
     }),
-    { name: "travel-theme" }
+    { name: "travel-theme", version: 1 }
   )
 );

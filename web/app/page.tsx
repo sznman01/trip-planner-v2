@@ -28,7 +28,7 @@ export default function Page() {
           </Link>
         </div>
 
-        <p className="mt-2 text-lg text-[color:var(--muted-foreground)]">開始規劃你的下一趟旅行</p>
+        <p className="mt-2 text-lg text-[color:var(--muted)]">開始規劃你的下一趟旅行</p>
 
         {/* ✅ 新增旅程按鈕：標題下面 */}
         <div className="grid grid-cols-1 gap-4 mt-4 mb-4">
@@ -49,7 +49,7 @@ export default function Page() {
         {trips.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-xl font-semibold text-[color:var(--foreground)] mb-2">還沒有旅程</p>
-            <p className="text-[color:var(--muted-foreground)]">
+            <p className="text-[color:var(--muted)]">
               點擊上方「新增旅程」開始你的第一個旅行計劃
             </p>
           </div>

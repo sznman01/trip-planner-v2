@@ -1,10 +1,10 @@
 'use client';
 
 export const dynamic = 'force-dynamic';
-import Link from 'next/link';
+
 import { useParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
-import { ArrowLeft, Plus, MoreHorizontal, ChevronDown } from 'lucide-react';
+import { Plus, MoreHorizontal, ChevronDown } from 'lucide-react';
 import { useTripsStore } from '@/lib/store/trips';
 
 type ShoppingCategory = 'normal' | 'important' | 'snack';
@@ -13,9 +13,9 @@ type ShoppingFilter = 'all' | ShoppingCategory;
 type ShoppingItem = {
   name: string;
   shop?: string;
-  category?: ShoppingCategory; // default normal
-  image?: string; // URL/base64
-  purchased?: boolean; // default false
+  category?: ShoppingCategory;
+  image?: string;
+  purchased?: boolean;
 };
 
 type TripLike = {
@@ -41,6 +41,9 @@ function tagLabel(category?: ShoppingCategory) {
   return '一般';
 }
 
+/**
+ * 分類 tag：保留固定色（分類色），唔跟主題都合理
+ */
 function tagClass(category?: ShoppingCategory) {
   if (category === 'important') return 'bg-rose-100 text-rose-700 border-rose-200';
   if (category === 'snack') return 'bg-amber-100 text-amber-800 border-amber-200';
@@ -74,22 +77,22 @@ function Modal(props: {
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
           className={[
-            'w-full rounded-3xl border border-[var(--border)] bg-white shadow-xl',
+            'w-full rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-xl',
             'max-h-[85vh] overflow-y-auto',
             props.maxWidthClassName ?? 'max-w-md',
           ].join(' ')}
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex items-start justify-between gap-3 px-6 py-5 border-b border-slate-100">
+          <div className="flex items-start justify-between gap-3 px-6 py-5 border-b border-[color:var(--border)]">
             <div>
-              <h2 className="text-lg font-semibold text-[var(--foreground)]">{props.title}</h2>
-              <p className="mt-1 text-xs text-slate-500">資料會儲存在本地（LocalStorage persist）。</p>
+              <h2 className="text-lg font-semibold text-[color:var(--foreground)]">{props.title}</h2>
+              <p className="mt-1 text-xs text-[color:var(--muted)]">資料會儲存在本地（LocalStorage persist）。</p>
             </div>
             <button
               type="button"
               onClick={props.onClose}
-              className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              className="rounded-xl px-3 py-2 text-sm font-semibold text-[color:var(--foreground)]/80 hover:bg-[color:var(--background)]"
             >
               關閉
             </button>
@@ -111,7 +114,6 @@ export default function ShoppingPage() {
         ? params.tripId[0]
         : '';
 
-  // avoid zustand infinite loop: select primitives separately
   const trips = useTripsStore((s) => s.trips);
   const upsertTrip = useTripsStore((s) => s.upsertTrip);
 
@@ -124,7 +126,6 @@ export default function ShoppingPage() {
 
   const [filter, setFilter] = useState<ShoppingFilter>('all');
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
-
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
 
   const [formOpen, setFormOpen] = useState(false);
@@ -228,12 +229,9 @@ export default function ShoppingPage() {
   if (!tripId) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
-          <h1 className="text-lg font-semibold text-[var(--foreground)]">tripId 無效</h1>
-          <p className="mt-2 text-sm text-[var(--muted)]">請確認路由係 /trips/[tripId]/shopping。</p>
-          <div className="mt-4">
-            
-          </div>
+        <div className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] p-6 shadow-sm">
+          <h1 className="text-lg font-semibold text-[color:var(--foreground)]">tripId 無效</h1>
+          <p className="mt-2 text-sm text-[color:var(--muted)]">請確認路由係 /trips/[tripId]/shopping。</p>
         </div>
       </div>
     );
@@ -242,12 +240,9 @@ export default function ShoppingPage() {
   if (!trip) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
-          <h1 className="text-lg font-semibold text-[var(--foreground)]">找不到旅程</h1>
-          <p className="mt-2 text-sm text-[var(--muted)]">呢個 tripId 可能唔存在，或者資料未載入完成。</p>
-          <div className="mt-4">
-            
-          </div>
+        <div className="rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] p-6 shadow-sm">
+          <h1 className="text-lg font-semibold text-[color:var(--foreground)]">找不到旅程</h1>
+          <p className="mt-2 text-sm text-[color:var(--muted)]">呢個 tripId 可能唔存在，或者資料未載入完成。</p>
         </div>
       </div>
     );
@@ -259,30 +254,32 @@ export default function ShoppingPage() {
       <div className="mb-5 flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-3">
-            <h1 className="truncate text-xl font-semibold text-[var(--foreground)]">購物清單</h1>
+            <h1 className="truncate text-xl font-semibold text-[color:var(--foreground)]">購物清單</h1>
           </div>
-          <p className="mt-2 truncate text-sm text-[var(--muted)]">{trip.title ? `旅程：${trip.title}` : `Trip ID：${trip.id}`}</p>
+          <p className="mt-2 truncate text-sm text-[color:var(--muted)]">
+            {trip.title ? `旅程：${trip.title}` : `Trip ID：${trip.id}`}
+          </p>
         </div>
 
         <button
           type="button"
           onClick={() => openShoppingForm(undefined, -1)}
-          className="inline-flex items-center justify-center rounded-full bg-[#BC002D] text-[var(--primary-foreground)] shadow-sm hover:opacity-95 h-11 w-11"
+          className="inline-flex items-center justify-center rounded-full bg-[color:var(--primary)] text-[color:var(--primary-foreground)] shadow-sm hover:opacity-95 h-11 w-11"
           aria-label="新增購物項目"
         >
           <Plus className="h-5 w-5" />
         </button>
       </div>
 
-      {/* Stats */}
+      {/* Stats（保持原本色系：可留作 semantic 色） */}
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4">
           <div className="text-xs font-semibold text-emerald-800">待買</div>
-          <div className="mt-1 text-2xl font-semibold text-[var(--foreground)]">{pendingCount}</div>
+          <div className="mt-1 text-2xl font-semibold text-[color:var(--foreground)]">{pendingCount}</div>
         </div>
         <div className="rounded-3xl border border-amber-200 bg-amber-50 p-4">
           <div className="text-xs font-semibold text-amber-900">已買</div>
-          <div className="mt-1 text-2xl font-semibold text-[var(--foreground)]">{purchasedCount}</div>
+          <div className="mt-1 text-2xl font-semibold text-[color:var(--foreground)]">{purchasedCount}</div>
         </div>
       </div>
 
@@ -292,68 +289,39 @@ export default function ShoppingPage() {
           <button
             type="button"
             onClick={() => setShowFilterDropdown((v) => !v)}
-            className="w-full rounded-full border border-[var(--border)] bg-white px-4 py-3 text-left text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center justify-between"
+            className="w-full rounded-full border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-left text-sm font-semibold text-[color:var(--foreground)] hover:opacity-95 flex items-center justify-between"
           >
             <span>{filterLabel(filter, totalCount)}</span>
-            <span className="inline-flex items-center gap-2 text-xs text-slate-500">
-              <span>
-                {filter === 'all'
-                  ? ''
-                  : `（${displayList.length}/${totalCount}）`}
-              </span>
+
+            <span className="inline-flex items-center gap-2 text-xs text-[color:var(--muted)]">
+              <span>{filter === 'all' ? '' : `（${displayList.length}/${totalCount}）`}</span>
               <ChevronDown className="h-4 w-4" />
             </span>
           </button>
 
           {showFilterDropdown && (
-            <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-lg">
-              <button
-                type="button"
-                onClick={() => {
-                  setFilter('all');
-                  setShowFilterDropdown(false);
-                }}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                <span>全部</span>
-                <span className="text-xs text-slate-500">{totalCount}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setFilter('normal');
-                  setShowFilterDropdown(false);
-                }}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                <span>一般</span>
-                <span className="text-xs text-slate-500">{countByCategory.normal}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setFilter('important');
-                  setShowFilterDropdown(false);
-                }}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                <span>重要</span>
-                <span className="text-xs text-slate-500">{countByCategory.important}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setFilter('snack');
-                  setShowFilterDropdown(false);
-                }}
-                className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50"
-              >
-                <span>零食</span>
-                <span className="text-xs text-slate-500">{countByCategory.snack}</span>
-              </button>
+            <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-lg">
+              {(
+                [
+                  { id: 'all', label: '全部', count: totalCount },
+                  { id: 'normal', label: '一般', count: countByCategory.normal },
+                  { id: 'important', label: '重要', count: countByCategory.important },
+                  { id: 'snack', label: '零食', count: countByCategory.snack },
+                ] as const
+              ).map((x) => (
+                <button
+                  key={x.id}
+                  type="button"
+                  onClick={() => {
+                    setFilter(x.id);
+                    setShowFilterDropdown(false);
+                  }}
+                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--background)]"
+                >
+                  <span>{x.label}</span>
+                  <span className="text-xs text-[color:var(--muted)]">{x.count}</span>
+                </button>
+              ))}
             </div>
           )}
         </div>
@@ -364,11 +332,7 @@ export default function ShoppingPage() {
         {displayList.length > 0 ? (
           <div className="space-y-3">
             {displayList.map((item, idxInDisplay) => {
-              // Need real index in original list (because displayList is filtered)
-              const realIndex = filter === 'all'
-                ? idxInDisplay
-                : shoppingList.findIndex((x) => x === item);
-
+              const realIndex = filter === 'all' ? idxInDisplay : shoppingList.findIndex((x) => x === item);
               const purchased = !!item.purchased;
               const category = (item.category ?? 'normal') as ShoppingCategory;
               const isMenuOpen = activeMenuIndex === realIndex;
@@ -376,7 +340,7 @@ export default function ShoppingPage() {
               return (
                 <div
                   key={`${item.name}-${realIndex}-${idxInDisplay}`}
-                  className="relative rounded-3xl border border-[var(--border)] bg-white p-3 shadow-sm"
+                  className="relative rounded-3xl border border-[color:var(--border)] bg-[color:var(--card)] p-3 shadow-sm"
                 >
                   <div className="flex items-center gap-3">
                     {/* checkbox */}
@@ -385,7 +349,9 @@ export default function ShoppingPage() {
                       onClick={() => togglePurchased(realIndex)}
                       className={[
                         'h-6 w-6 rounded-lg border-2 flex items-center justify-center',
-                        purchased ? 'bg-[#BC002D] border-[#BC002D] text-[var(--primary-foreground)]' : 'bg-white border-[var(--border)] text-transparent',
+                        purchased
+                          ? 'bg-[color:var(--primary)] border-[color:var(--primary)] text-[color:var(--primary-foreground)]'
+                          : 'bg-[color:var(--card)] border-[color:var(--border)] text-transparent',
                       ].join(' ')}
                       aria-label={purchased ? '標記為未買' : '標記為已買'}
                     >
@@ -393,7 +359,7 @@ export default function ShoppingPage() {
                     </button>
 
                     {/* image */}
-                    <div className="h-14 w-14 overflow-hidden rounded-2xl bg-slate-100 flex items-center justify-center flex-shrink-0 border border-[var(--border)]">
+                    <div className="h-14 w-14 overflow-hidden rounded-2xl bg-[color:var(--background)] flex items-center justify-center flex-shrink-0 border border-[color:var(--border)]">
                       {item.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
@@ -405,14 +371,26 @@ export default function ShoppingPage() {
                     {/* main */}
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <div className={['truncate text-sm font-semibold', purchased ? 'line-through text-slate-400' : 'text-[var(--foreground)]'].join(' ')}>
+                        <div
+                          className={[
+                            'truncate text-sm font-semibold',
+                            purchased ? 'line-through text-[color:var(--muted)]' : 'text-[color:var(--foreground)]',
+                          ].join(' ')}
+                        >
                           {item.name}
                         </div>
-                        <span className={['inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold', tagClass(category)].join(' ')}>
+
+                        <span
+                          className={[
+                            'inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold',
+                            tagClass(category),
+                          ].join(' ')}
+                        >
                           {tagLabel(category)}
                         </span>
                       </div>
-                      <div className="mt-1 truncate text-xs text-[var(--muted)]">{item.shop || '—'}</div>
+
+                      <div className="mt-1 truncate text-xs text-[color:var(--muted)]">{item.shop || '—'}</div>
                     </div>
 
                     {/* menu */}
@@ -420,25 +398,25 @@ export default function ShoppingPage() {
                       <button
                         type="button"
                         onClick={() => setActiveMenuIndex((cur) => (cur === realIndex ? -1 : realIndex))}
-                        className="rounded-xl p-2 text-slate-500 hover:bg-slate-50"
+                        className="rounded-xl p-2 text-[color:var(--muted)] hover:bg-[color:var(--background)]"
                         aria-label="購物項目選單"
                       >
                         <MoreHorizontal className="h-4 w-4" />
                       </button>
 
                       {isMenuOpen && (
-                        <div className="absolute right-0 top-10 z-10 w-40 overflow-hidden rounded-2xl border border-[var(--border)] bg-white shadow-lg">
+                        <div className="absolute right-0 top-10 z-10 w-40 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] shadow-lg">
                           <button
                             type="button"
                             onClick={() => openShoppingForm(shoppingList[realIndex], realIndex)}
-                            className="block w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-[color:var(--foreground)] hover:bg-[color:var(--background)]"
                           >
                             編輯
                           </button>
                           <button
                             type="button"
                             onClick={() => deleteItem(realIndex)}
-                            className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-slate-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-[color:var(--background)]"
                           >
                             刪除
                           </button>
@@ -451,47 +429,43 @@ export default function ShoppingPage() {
             })}
           </div>
         ) : (
-          <div className="rounded-3xl border border-dashed border-[var(--border)] bg-white p-10 text-center">
+          <div className="rounded-3xl border border-dashed border-[color:var(--border)] bg-[color:var(--card)] p-10 text-center">
             <div className="text-4xl">🛒</div>
-            <p className="mt-3 text-sm font-semibold text-slate-700">清單暫時冇嘢</p>
-            <p className="mt-1 text-sm text-slate-500">按右上角「＋」新增第一個購物項目。</p>
+            <p className="mt-3 text-sm font-semibold text-[color:var(--foreground)]">清單暫時冇嘢</p>
+            <p className="mt-1 text-sm text-[color:var(--muted)]">按右上角「＋」新增第一個購物項目。</p>
           </div>
         )}
       </div>
 
       {/* Add/Edit modal */}
-      <Modal
-        open={formOpen}
-        title={editingIndex >= 0 ? '編輯購物項目' : '新增購物項目'}
-        onClose={closeShoppingForm}
-      >
+      <Modal open={formOpen} title={editingIndex >= 0 ? '編輯購物項目' : '新增購物項目'} onClose={closeShoppingForm}>
         <div className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">物品名稱（必填）</label>
+            <label className="mb-2 block text-sm font-medium text-[color:var(--foreground)]/80">物品名稱（必填）</label>
             <input
               value={form.name}
               onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-3 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--ring)]"
               placeholder="例如：面膜 / 眼藥水 / 伴手禮"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">店舖（選填）</label>
+            <label className="mb-2 block text-sm font-medium text-[color:var(--foreground)]/80">店舖（選填）</label>
             <input
               value={form.shop}
               onChange={(e) => setForm((p) => ({ ...p, shop: e.target.value }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-3 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--ring)]"
               placeholder="例如：Donki / Loft / 超市"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">分類</label>
+            <label className="mb-2 block text-sm font-medium text-[color:var(--foreground)]/80">分類</label>
             <select
               value={form.category}
               onChange={(e) => setForm((p) => ({ ...p, category: e.target.value as ShoppingCategory }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-3 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--ring)]"
             >
               <option value="normal">一般</option>
               <option value="important">重要</option>
@@ -500,38 +474,41 @@ export default function ShoppingPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">圖片 URL（選填）</label>
+            <label className="mb-2 block text-sm font-medium text-[color:var(--foreground)]/80">圖片 URL（選填）</label>
             <input
               value={form.image}
               onChange={(e) => setForm((p) => ({ ...p, image: e.target.value }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-3 text-sm text-[color:var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[color:var(--ring)]"
               placeholder="https://..."
             />
             {form.image ? (
-              <div className="mt-3 overflow-hidden rounded-2xl border border-[var(--border)]">
+              <div className="mt-3 overflow-hidden rounded-2xl border border-[color:var(--border)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={form.image} alt="preview" className="w-full object-cover" />
               </div>
             ) : null}
           </div>
 
-          <div className="flex items-center justify-between rounded-2xl border border-[var(--border)] bg-slate-50 p-3">
+          <div className="flex items-center justify-between rounded-2xl border border-[color:var(--border)] bg-[color:var(--background)] p-3">
             <div>
-              <div className="text-sm font-semibold text-[var(--foreground)]">已買</div>
-              <div className="text-xs text-[var(--muted)]">勾選後會顯示刪線</div>
+              <div className="text-sm font-semibold text-[color:var(--foreground)]">已買</div>
+              <div className="text-xs text-[color:var(--muted)]">勾選後會顯示刪線</div>
             </div>
+
             <button
               type="button"
               onClick={() => setForm((p) => ({ ...p, purchased: !p.purchased }))}
               className={[
                 'h-9 w-14 rounded-full border transition',
-                form.purchased ? 'bg-[#BC002D] border-[#BC002D]' : 'bg-white border-[var(--border)]',
+                form.purchased
+                  ? 'bg-[color:var(--primary)] border-[color:var(--primary)]'
+                  : 'bg-[color:var(--card)] border-[color:var(--border)]',
               ].join(' ')}
               aria-label="toggle purchased"
             >
               <span
                 className={[
-                  'block h-7 w-7 rounded-full bg-white shadow-sm transition translate-x-1',
+                  'block h-7 w-7 rounded-full bg-[color:var(--card)] shadow-sm transition translate-x-1',
                   form.purchased ? 'translate-x-6' : 'translate-x-1',
                 ].join(' ')}
               />
@@ -542,14 +519,14 @@ export default function ShoppingPage() {
             <button
               type="button"
               onClick={saveItem}
-              className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95"
+              className="flex-1 rounded-2xl bg-[color:var(--primary)] px-4 py-3 text-sm font-semibold text-[color:var(--primary-foreground)] hover:opacity-95"
             >
               儲存
             </button>
             <button
               type="button"
               onClick={closeShoppingForm}
-              className="flex-1 rounded-2xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 hover:opacity-90"
+              className="flex-1 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm font-semibold text-[color:var(--foreground)]/80 hover:bg-[color:var(--background)]"
             >
               取消
             </button>

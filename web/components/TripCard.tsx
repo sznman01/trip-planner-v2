@@ -125,7 +125,7 @@ export function TripCard({ trip, onDelete }: Props) {
           />
         ) : (
           <div
-            className="h-44 w-full cursor-pointer bg-gradient-to-r from-pink-200 to-red-300"
+            className="h-44 w-full cursor-pointer bg-gradient-to-r from-[color:var(--grad-from)] to-[color:var(--grad-to)]"
             onClick={goItinerary}
           />
         )}
