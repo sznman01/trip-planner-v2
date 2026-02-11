@@ -125,7 +125,7 @@ export function TripCard({ trip, onDelete }: Props) {
           />
         ) : (
           <div
-            className="h-44 w-full cursor-pointer bg-gradient-to-r from-[color:var(--grad-from)] to-[color:var(--grad-to)]"
+            className="h-44 w-full cursor-pointer bg-gradient-to-r from-[color:var(--hero-from)] to-[color:var(--hero-to)]"
             onClick={goItinerary}
           />
         )}
@@ -138,7 +138,7 @@ export function TripCard({ trip, onDelete }: Props) {
             trigger={
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-2xl bg-white/90 px-3 py-2 text-sm font-semibold text-gray-800 shadow-sm backdrop-blur-md hover:bg-white"
+                className="inline-flex items-center gap-2 rounded-2xl bg-card/90 px-3 py-2 text-sm font-semibold text-[color:var(--primary-foreground)] shadow-sm backdrop-blur-md hover:bg-card"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Pencil size={16} />
@@ -149,7 +149,7 @@ export function TripCard({ trip, onDelete }: Props) {
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-2xl bg-white/90 px-3 py-2 text-sm font-semibold text-red-600 shadow-sm backdrop-blur-md hover:bg-white"
+            className="inline-flex items-center gap-2 rounded-2xl bg-card/90 px-3 py-2 text-sm font-semibold text-red-600 shadow-sm backdrop-blur-md hover:bg-white"
             onClick={(e) => {
               e.stopPropagation();
               confirmDelete();
@@ -165,25 +165,25 @@ export function TripCard({ trip, onDelete }: Props) {
       <div className="cursor-pointer p-4" onClick={goItinerary}>
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="truncate text-lg font-bold text-gray-900">{trip.title}</div>
+            <div className="truncate text-lg font-bold text-[color:var(--primary-foreground)]">{trip.title}</div>
 
             <div className="mt-1 inline-flex items-center gap-1 text-sm text-gray-600">
               <MapPin size={16} />
               <span className="truncate">{trip.location}</span>
             </div>
 
-            <div className="mt-2 text-xs text-gray-500">
+            <div className="mt-2 text-xs text-[color:var(--primary-foreground)]">
               {trip.startDate} → {trip.endDate}
               {totalDays ? `（${totalDays} 日）` : ""}
             </div>
           </div>
 
           <div className="shrink-0 text-right">
-            <div className="text-xs font-semibold text-gray-700">{statusLabel}</div>
+            <div className="text-xs font-semibold text-[color:var(--primary-foreground)]">{statusLabel}</div>
             <div className="mt-1 text-xs text-gray-500">旅程進度</div>
-            <div className="mt-2 h-2 w-24 overflow-hidden rounded-full bg-gray-100">
+            <div className="mt-2 h-2 w-24 overflow-hidden rounded-full bg-[color:var(--primary)]">
               <div
-                className="h-2 rounded-full bg-red-600"
+                className="h-2 rounded-full bg-[color:var(--primary)]"
                 style={{ width: `${progressPct}%` }}
               />
             </div>

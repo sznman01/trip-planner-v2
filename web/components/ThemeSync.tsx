@@ -5,12 +5,12 @@ import { useThemeStore } from "@/lib/store/theme";
 
 export default function ThemeSync() {
   const theme = useThemeStore((s) => s.theme);
+  const fontSize = useThemeStore((s) => s.fontSize);
 
   useEffect(() => {
-    const html = document.documentElement;
-    html.dataset.theme = theme;       // ✅ 只改 data-theme
-    console.log("✅ Theme applied:", theme);
-  }, [theme]);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.setProperty("--app-font-size", `${fontSize}px`);
+  }, [theme, fontSize]);
 
   return null;
 }

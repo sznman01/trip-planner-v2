@@ -50,7 +50,7 @@ export function CategoryDonut({ expenses }: { expenses: ExpenseLike[] }) {
   const total = useMemo(() => data.reduce((s, x) => s + x.value, 0), [data]);
 
   if (!data.length) {
-    return <div className="text-sm text-slate-500">未有支出記錄</div>;
+    return <div className="text-sm text-muted">未有支出記錄</div>;
   }
 
   return (
@@ -75,7 +75,7 @@ export function CategoryDonut({ expenses }: { expenses: ExpenseLike[] }) {
 
         <div className="pointer-events-none absolute inset-0 grid place-items-center">
           <div className="text-center">
-            <div className="text-[11px] text-slate-500">已花費</div>
+            <div className="text-[11px] text-muted">已花費</div>
             <div className="text-sm font-extrabold text-[var(--foreground)]">{total.toLocaleString("zh-HK")}</div>
           </div>
         </div>
@@ -89,8 +89,8 @@ export function CategoryDonut({ expenses }: { expenses: ExpenseLike[] }) {
               <span className="h-2.5 w-2.5 rounded-full" style={{ background: x.color }} />
               <div className="min-w-0 flex-1">
                 <div className="flex justify-between gap-2 text-xs">
-                  <span className="truncate text-slate-700">{x.name}</span>
-                  <span className="tabular-nums text-slate-500">{pct.toFixed(1)}%</span>
+                  <span className="truncate text-foreground/70">{x.name}</span>
+                  <span className="tabular-nums text-muted">{pct.toFixed(1)}%</span>
                 </div>
                 <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
                   <div className="h-full" style={{ width: `${pct}%`, background: x.color }} />

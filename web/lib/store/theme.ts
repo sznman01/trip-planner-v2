@@ -3,26 +3,24 @@ import { persist } from "zustand/middleware";
 
 export type ThemeName = "white" | "beige" | "pink" | "blue" | "black";
 
-interface ThemeState {
+type ThemeState = {
   theme: ThemeName;
-  setTheme: (theme: ThemeName) => void;
-  cycleTheme: () => void; // ✅ 加返
-}
+  setTheme: (t: ThemeName) => void;
 
-const ORDER: ThemeName[] = ["white", "beige", "pink", "blue", "black"];
+  fontSize: number; // px
+  setFontSize: (n: number) => void;
+};
 
 export const useThemeStore = create<ThemeState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       theme: "beige",
-          setTheme: (theme) => set({ theme }),
-      cycleTheme: () => {
-        const cur = get().theme;
-        const idx = ORDER.indexOf(cur);
-        const next = ORDER[(idx + 1 + ORDER.length) % ORDER.length] ?? "beige";
-        set({ theme: next });
-      },
+      setTheme: (t) => set({ theme: t }),
+
+      fontSize: 16,
+      setFontSize: (n) =>
+        set({ fontSize: Math.max(12, Math.min(22, Math.round(n))) }),
     }),
-    { name: "travel-theme", version: 1 }
+    { name: "theme_v2", version: 2 }
   )
 );

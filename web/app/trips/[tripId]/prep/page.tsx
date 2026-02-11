@@ -178,8 +178,8 @@ function ModalShell(props: {
         onClick={onClose}
         aria-label="Close"
       />
-      <div className="relative w-full max-w-md rounded-3xl border border-gray-200 bg-white p-6 shadow-xl">
-        <div className="mb-4 text-center text-xl font-bold text-gray-900">{title}</div>
+      <div className="relative w-full max-w-md rounded-3xl border border-gray-200 bg-card p-6 shadow-xl">
+        <div className="mb-4 text-center text-xl font-bold text-[color:var(--primary-foreground)]">{title}</div>
         {children}
       </div>
     </div>
@@ -682,19 +682,19 @@ useEffect(() => {
 
   return (
     <main className="p-4 pb-24">
-      <h1 className="text-lg font-bold text-gray-900">出發前準備</h1>
+      <h1 className="text-lg font-bold text-[color:var(--primary-foreground)]">出發前準備</h1>
 
       {/* Segmented Tabs */}
       <div className="mt-3 grid grid-cols-2 rounded-xl bg-gray-100 p-1 text-sm">
         <button
-          className={`rounded-lg py-2 ${tab === "prep" ? "bg-white font-semibold text-gray-900" : "text-gray-500"}`}
+          className={`rounded-lg py-2 ${tab === "prep" ? "bg-card font-semibold text-[color:var(--primary-foreground)]" : "text-[color:var(--menu-btn-fg)]"}`}
           onClick={() => setTab("prep")}
           type="button"
         >
           Checklist
         </button>
         <button
-          className={`rounded-lg py-2 ${tab === "members" ? "bg-white font-semibold text-gray-900" : "text-gray-500"}`}
+          className={`rounded-lg py-2 ${tab === "members" ? "bg-card font-semibold text-[color:var(--primary-foreground)]" : "text-[color:var(--menu-btn-fg)]"}`}
           onClick={() => setTab("members")}
           type="button"
         >
@@ -705,7 +705,7 @@ useEffect(() => {
       {/* ===== Prep tab ===== */}
       {tab === "prep" ? (
         <section className="mt-4">
-          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-[var(--primary-foreground)] shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-[color:var(--hero-from)] to-[color:var(--hero-to)] p-4 text-[var(--primary-foreground)] shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-base font-bold">出發前檢查清單</div>
@@ -714,19 +714,19 @@ useEffect(() => {
               <button
                 type="button"
                 onClick={openChecklistCreate}
-                className="rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[color:var(--primary)] shadow-sm hover:bg-rose-50"
+                className="rounded-full bg-[color:var(--menu-btn-bg)] px-3 py-1.5 text-sm font-bold text-[color:var(--menu-btn-fg)] shadow-sm hover:bg-rose-50"
               >
                 + 新增
               </button>
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/90 p-3 text-gray-900">
-                <div className="text-xs text-gray-600">未完成</div>
+              <div className="rounded-xl bg-card/90 p-3 text-[color:var(--primary-foreground)]">
+                <div className="text-xs text-[color:var(--primary-foreground)]">未完成</div>
                 <div className="mt-1 text-2xl font-extrabold">{pendingChecklistCount}</div>
               </div>
-              <div className="rounded-xl bg-white/90 p-3 text-gray-900">
-                <div className="text-xs text-gray-600">已完成</div>
+              <div className="rounded-xl bg-card/90 p-3 text-[color:var(--primary-foreground)]">
+                <div className="text-xs text-[color:var(--primary-foreground)]">已完成</div>
                 <div className="mt-1 text-2xl font-extrabold">{completedChecklistCount}</div>
               </div>
             </div>
@@ -734,7 +734,7 @@ useEffect(() => {
 
           <div className="mt-4 space-y-5">
             {checklistGroups.length === 0 ? (
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 shadow-sm">
+              <div className="rounded-2xl border border-gray-200 bg-card p-6 text-center text-sm text-gray-500 shadow-sm">
                 暫時未有清單，按「新增」開始。
               </div>
             ) : (
@@ -742,13 +742,13 @@ useEffect(() => {
                 const items = checklistByGroup.get(group) ?? [];
                 return (
                   <div key={group}>
-                    <div className="mb-2 px-1 text-sm font-bold text-gray-700">
+                    <div className="mb-2 px-1 text-sm font-bold text-[color:var(--primary-foreground)]">
                       {group}{" "}
                       <span className="ml-1 text-xs font-normal text-gray-400">{items.length}</span>
                     </div>
 
                     {items.length === 0 ? (
-                      <div className="rounded-2xl border border-gray-200 bg-white p-4 text-center text-sm text-gray-400 shadow-sm">
+                      <div className="rounded-2xl border border-gray-200 bg-card p-4 text-center text-sm text-[color:var(--primary-foreground)] shadow-sm">
                         空
                       </div>
                     ) : (
@@ -756,7 +756,7 @@ useEffect(() => {
                         {items.map((item) => (
                           <div
                             key={item.id}
-                            className="relative flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm"
+                            className="relative flex items-center gap-3 rounded-2xl border border-gray-200 bg-card p-3 shadow-sm"
                           >
                             <button
                               type="button"
@@ -775,7 +775,7 @@ useEffect(() => {
                               <div className="flex items-center gap-2">
                                 <div
                                   className={`truncate text-sm font-semibold ${
-                                    item.completed ? "text-gray-400 line-through" : "text-gray-900"
+                                    item.completed ? "text-[color:var(--primary-foreground)] line-through" : "text-[color:var(--primary-foreground)]"
                                   }`}
                                 >
                                   {item.name}
@@ -809,17 +809,17 @@ useEffect(() => {
                               </button>
 
                               {activeChecklistMenuId === item.id ? (
-                                <div className="absolute right-0 top-9 z-10 w-32 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
+                                <div className="absolute right-0 top-9 z-10 w-32 overflow-hidden rounded-xl border border-gray-200 bg-card shadow-lg">
                                   <button
                                     type="button"
-                                    className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                                    className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary-foreground)] hover:bg-gray-50"
                                     onClick={() => openChecklistEdit(item)}
                                   >
                                     編輯
                                   </button>
                                   <button
                                     type="button"
-                                    className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary)] hover:bg-gray-50"
+                                    className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-[color:var(--background)]"
                                     onClick={() => deleteChecklistItem(item.id)}
                                   >
                                     刪除
@@ -848,42 +848,42 @@ useEffect(() => {
           >
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">項目</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">項目</label>
                 <input
                   value={checklistDraft.name}
                   onChange={(e) => setChecklistDraft((s) => ({ ...s, name: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
                   placeholder="SIM 卡 / 護照 / 轉插..."
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">備註</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">備註</label>
                 <input
                   value={checklistDraft.subtitle}
                   onChange={(e) => setChecklistDraft((s) => ({ ...s, subtitle: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
                   placeholder="例如：出發前 2 天買"
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">日期</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">日期</label>
                 <input
                   type="date"
                   value={checklistDraft.date}
                   onChange={(e) => setChecklistDraft((s) => ({ ...s, date: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-89 rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">分組</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">分組</label>
                 <input
                   list="checklist-groups"
                   value={checklistDraft.group}
                   onChange={(e) => setChecklistDraft((s) => ({ ...s, group: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
                   placeholder="證件 / 交通 / 行李..."
                 />
                 <datalist id="checklist-groups">
@@ -894,13 +894,13 @@ useEffect(() => {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">標籤</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">標籤</label>
                 <select
                   value={checklistDraft.tag}
                   onChange={(e) =>
                     setChecklistDraft((s) => ({ ...s, tag: e.target.value as ChecklistTag }))
                   }
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
                 >
                   <option value="general">一般</option>
                   <option value="important">重要</option>
@@ -911,7 +911,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={saveChecklistItem}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[color:var(--primary-foreground)] shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>
@@ -934,7 +934,7 @@ useEffect(() => {
       {/* ===== Members tab ===== */}
       {tab === "members" ? (
         <section className="mt-4">
-          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-pink-500 to-rose-500 p-4 text-[var(--primary-foreground)] shadow-sm">
+          <div className="rounded-2xl border border-gray-200 bg-gradient-to-br from-[color:var(--hero-from)] to-[color:var(--hero-to)] p-4 text-[var(--primary-foreground)] shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="text-base font-bold">成員結算（HKD）</div>
@@ -946,7 +946,7 @@ useEffect(() => {
                 type="button"
                 onClick={openMemberCreate}
                 disabled={members.length >= 10}
-                className={`rounded-full bg-white px-3 py-1.5 text-sm font-bold text-[color:var(--primary)] shadow-sm hover:bg-rose-50 ${
+                className={`rounded-full  bg-[color:var(--menu-btn-bg)] px-3 py-1.5 text-sm font-bold text-[color:var(--menu-btn-fg)] shadow-sm hover:bg-rose-50 ${
                   members.length >= 10 ? "cursor-not-allowed opacity-50" : ""
                 }`}
               >
@@ -955,12 +955,12 @@ useEffect(() => {
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-3">
-              <div className="rounded-xl bg-white/90 p-3 text-gray-900">
-                <div className="text-xs text-gray-600">成員數</div>
+              <div className="rounded-xl bg-card/90 p-3 text-[color:var(--primary-foreground)]">
+                <div className="text-xs text-[color:var(--primary-foreground)]">成員數</div>
                 <div className="mt-1 text-2xl font-extrabold">{totalMembersCount}</div>
               </div>
-              <div className="rounded-xl bg-white/90 p-3 text-gray-900">
-                <div className="text-xs text-gray-600">總付款（HKD）</div>
+              <div className="rounded-xl bg-card/90 p-3 text-[color:var(--primary-foreground)]">
+                <div className="text-xs text-[color:var(--primary-foreground)]">總付款（HKD）</div>
                 <div className="mt-1 text-2xl font-extrabold">{formatCurrencyHKD(totalPaymentsHKD)}</div>
               </div>
             </div>
@@ -968,7 +968,7 @@ useEffect(() => {
 
           <div className="mt-4 space-y-2">
             {members.length === 0 ? (
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 shadow-sm">
+              <div className="rounded-2xl border border-gray-200 bg-card p-6 text-center text-sm text-gray-500 shadow-sm">
                 暫時未有成員。
               </div>
             ) : (
@@ -977,14 +977,14 @@ useEffect(() => {
                 return (
                   <div
                     key={m.id}
-                    className="relative flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm"
+                    className="relative flex items-center gap-3 rounded-2xl border border-gray-200 bg-card p-3 shadow-sm"
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pink-100 text-lg">
                       {m.gender === "male" ? "👨" : "👩"}
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-sm font-semibold text-gray-900">{m.name}</div>
+                      <div className="truncate text-sm font-semibold text-[color:var(--primary-foreground)]">{m.name}</div>
                       <div className="text-xs text-gray-500">
                         {m.role ? `${m.role} · ` : ""}
                         {formatCurrencyHKD(total)}
@@ -1002,24 +1002,24 @@ useEffect(() => {
                       </button>
 
                       {activeMemberMenuId === m.id ? (
-                        <div className="absolute right-0 top-9 z-10 w-40 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-lg">
+                        <div className="absolute right-0 top-9 z-10 w-40 overflow-hidden rounded-xl border border-gray-200 bg-card shadow-lg">
                           <button
                             type="button"
-                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary-foreground)] hover:bg-gray-50"
                             onClick={() => openMemberEdit(m)}
                           >
                             編輯
                           </button>
                           <button
                             type="button"
-                            className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary-foreground)] hover:bg-gray-50"
                             onClick={() => openPaymentCreate(m.id)}
                           >
                             新增付款
                           </button>
                           <button
                             type="button"
-                            className="block w-full px-4 py-2 text-left text-sm text-[color:var(--primary)] hover:bg-gray-50"
+                            className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-zinc-50"
                             onClick={() => deleteMember(m.id)}
                           >
                             刪除
@@ -1035,8 +1035,8 @@ useEffect(() => {
 
           {/* Settlement */}
           {members.length >= 2 ? (
-            <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-              <div className="text-sm font-bold text-gray-700">結算</div>
+            <div className="mt-4 rounded-2xl border border-gray-200 bg-card p-4 shadow-sm">
+              <div className="text-sm font-bold text-[color:var(--primary-foreground)]">結算</div>
               <div className="mt-1 text-xs text-gray-500">
                 總付款 {formatCurrencyHKD(totalPaymentsHKD)}，每人平均 {formatCurrencyHKD(perPersonShareHKD)}
               </div>
@@ -1047,7 +1047,7 @@ useEffect(() => {
                   return (
                     <div key={m.id} className="flex items-center justify-between text-sm">
                       <div className="min-w-0">
-                        <span className="font-medium text-gray-900">{m.name}</span>
+                        <span className="font-medium text-[color:var(--primary-foreground)]">{m.name}</span>
                         <span className="ml-2 text-xs text-gray-500">
                           {formatCurrencyHKD(getMemberTotalPaymentHKD(m))}
                         </span>
@@ -1083,31 +1083,31 @@ useEffect(() => {
           >
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">姓名</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">姓名</label>
                 <input
                   value={memberDraft.name}
                   onChange={(e) => setMemberDraft((s) => ({ ...s, name: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                   placeholder="例如：阿明"
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">角色（可選）</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">角色（可選）</label>
                 <input
                   value={memberDraft.role}
                   onChange={(e) => setMemberDraft((s) => ({ ...s, role: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                   placeholder="例如：房費主付 / 司機"
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">性別</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">性別</label>
                 <select
                   value={memberDraft.gender}
                   onChange={(e) => setMemberDraft((s) => ({ ...s, gender: e.target.value as Gender }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                 >
                   <option value="male">男</option>
                   <option value="female">女</option>
@@ -1116,7 +1116,7 @@ useEffect(() => {
 
               {editingMember && editingMember.payments.length > 0 ? (
                 <div className="pt-1">
-                  <div className="mb-2 text-sm font-semibold text-gray-700">付款記錄</div>
+                  <div className="mb-2 text-sm font-semibold text-[color:var(--foreground)]">付款記錄</div>
                   <div className="max-h-48 space-y-2 overflow-auto pr-1">
                     {editingMember.payments
                       .slice()
@@ -1124,7 +1124,7 @@ useEffect(() => {
                       .map((p) => (
                         <div
                           key={p.id}
-                          className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm"
+                          className="rounded-xl border border-gray-200 bg-card px-3 py-2 text-sm"
                         >
                           <div className="flex items-center justify-between gap-3">
                             <div className="min-w-0 truncate text-gray-700">
@@ -1147,7 +1147,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={saveMember}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[color:var(--primary-foreground)] shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>
@@ -1176,13 +1176,13 @@ useEffect(() => {
           >
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">原幣</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">原幣</label>
                 <select
                   value={paymentDraft.originalCurrency}
                   onChange={(e) =>
                     setPaymentDraft((s) => ({ ...s, originalCurrency: e.target.value as CurrencyCode }))
                   }
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                 >
                   {SUPPORTED.map((c) => (
                     <option key={c} value={c}>
@@ -1193,14 +1193,14 @@ useEffect(() => {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">金額</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">金額</label>
                 <input
                   type="number"
                   value={paymentDraft.originalAmount}
                   onChange={(e) =>
                     setPaymentDraft((s) => ({ ...s, originalAmount: Number(e.target.value) }))
                   }
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                   placeholder="15000"
                 />
                 <div className="mt-1 flex items-center justify-between text-xs text-gray-500">
@@ -1219,11 +1219,11 @@ useEffect(() => {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">HKD（自動換算）</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">HKD（自動換算）</label>
                 <input
                   value={paymentHKD ? formatCurrency2(paymentHKD) : ""}
                   disabled
-                  className="w-full rounded-xl border border-gray-200 bg-gray-100 px-4 py-3 text-sm text-gray-600 outline-none"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                   placeholder="—"
                 />
                 {fxToHKD.asOf > 0 ? (
@@ -1234,22 +1234,22 @@ useEffect(() => {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">描述</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">描述</label>
                 <input
                   value={paymentDraft.description}
                   onChange={(e) => setPaymentDraft((s) => ({ ...s, description: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                   placeholder="JR Pass / 酒店訂金..."
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">日期</label>
+                <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">日期</label>
                 <input
                   type="date"
                   value={paymentDraft.date}
                   onChange={(e) => setPaymentDraft((s) => ({ ...s, date: e.target.value }))}
-                  className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100"
+                  className="w-89 rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
                 />
               </div>
 
@@ -1257,7 +1257,7 @@ useEffect(() => {
                 <button
                   type="button"
                   onClick={savePayment}
-                  className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] shadow-sm hover:bg-rose-600"
+                  className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[color:var(--primary-foreground)]  shadow-sm hover:bg-rose-600"
                 >
                   保存
                 </button>

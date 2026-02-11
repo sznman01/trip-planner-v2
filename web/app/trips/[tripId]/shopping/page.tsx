@@ -264,7 +264,7 @@ export default function ShoppingPage() {
         <button
           type="button"
           onClick={() => openShoppingForm(undefined, -1)}
-          className="inline-flex items-center justify-center rounded-full bg-[color:var(--primary)] text-[color:var(--primary-foreground)] shadow-sm hover:opacity-95 h-11 w-11"
+          className="inline-flex items-center justify-center rounded-full bg-[color:var(--menu-btn-bg)] text-[color:var(--menu-btn-fg)] shadow-sm hover:opacity-95 h-11 w-11"
           aria-label="新增購物項目"
         >
           <Plus className="h-5 w-5" />
@@ -526,7 +526,7 @@ export default function ShoppingPage() {
             <button
               type="button"
               onClick={closeShoppingForm}
-              className="flex-1 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm font-semibold text-[color:var(--foreground)]/80 hover:bg-[color:var(--background)]"
+              className="flex-1 rounded-2xl border border-[color:var(--menu-btn-border)] bg-[color:var(--menu-btn-bg)] px-4 py-3 text-sm font-semibold text-[color:var(--menu-btn-fg)] hover:opacity-90"
             >
               取消
             </button>

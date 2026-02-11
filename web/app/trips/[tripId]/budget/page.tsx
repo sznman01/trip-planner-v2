@@ -114,7 +114,7 @@ function Modal(props: {
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <div
           className={[
-            "w-full rounded-3xl border border-[var(--border)] bg-white shadow-xl",
+            "w-full rounded-3xl border border-[var(--border)] bg-card shadow-xl",
             "max-h-[85vh] overflow-y-auto",
             props.maxWidthClassName ?? "max-w-md",
           ].join(" ")}
@@ -124,12 +124,12 @@ function Modal(props: {
           <div className="flex items-start justify-between gap-3 px-6 py-5 border-b border-slate-100">
             <div>
               <h2 className="text-lg font-semibold text-[var(--foreground)]">{props.title}</h2>
-              <p className="mt-1 text-xs text-slate-500">資料會儲存在本地（LocalStorage persist）。</p>
+              <p className="mt-1 text-xs text-muted">資料會儲存在本地（LocalStorage persist）。</p>
             </div>
             <button
               type="button"
               onClick={props.onClose}
-              className="rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+              className="rounded-xl px-3 py-2 text-sm font-semibold text-foreground hover:bg-slate-50"
             >
               關閉
             </button>
@@ -353,7 +353,7 @@ export default function BudgetPage() {
   if (!tripId) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-[var(--border)] bg-card p-6 shadow-sm">
           <h1 className="text-lg font-semibold text-[var(--foreground)]">tripId 無效</h1>
           <p className="mt-2 text-sm text-[var(--muted)]">請確認路由係 /trips/[tripId]/budget。</p>
           <div className="mt-4"></div>
@@ -365,7 +365,7 @@ export default function BudgetPage() {
   if (!trip) {
     return (
       <div className="mx-auto w-full max-w-3xl p-6">
-        <div className="rounded-3xl border border-[var(--border)] bg-white p-6 shadow-sm">
+        <div className="rounded-3xl border border-[var(--border)] bg-card p-6 shadow-sm">
           <h1 className="text-lg font-semibold text-[var(--foreground)]">找不到旅程</h1>
           <p className="mt-2 text-sm text-[var(--muted)]">呢個 tripId 可能唔存在，或者資料未載入完成。</p>
           <div className="mt-4"></div>
@@ -387,7 +387,7 @@ export default function BudgetPage() {
             {trip.title ? `旅程：${trip.title}` : `Trip ID：${trip.id}`} · 當地貨幣：{localCode}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-500">
+          <p className="mt-1 truncate text-xs text-muted">
             匯率：1 {localCode} = {exchangeRate} HKD
             {rateDate ? `（${rateDate}）` : ""}
             {rateStatus === "loading" ? "（更新中…）" : null}
@@ -401,7 +401,7 @@ export default function BudgetPage() {
             setBudgetInputHKD(totalBudgetHKD || 0);
             setSetBudgetOpen(true);
           }}
-          className="inline-flex items-center gap-2 rounded-2xl border border-[var(--border)] bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-2xl border border-[color:var(--menu-btn-border)] bg-[color:var(--menu-btn-bg)] px-3 py-2 text-sm font-semibold text-[color:var(--menu-btn-fg)] hover:opacity-90"
         >
           <Settings2 className="h-4 w-4" />
           設定預算
@@ -409,8 +409,8 @@ export default function BudgetPage() {
       </div>
 
       {/* Converter */}
-      <div className="mb-4 rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm">
-        <p className="mb-3 text-sm font-semibold text-slate-800">貨幣轉換器（當地 → HKD）</p>
+      <div className="mb-4 rounded-3xl border border-[var(--border)] bg-card p-4 shadow-sm">
+        <p className="mb-3 text-sm font-semibold text-[color:var(--foreground)]">貨幣轉換器（當地 → HKD）</p>
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -419,7 +419,7 @@ export default function BudgetPage() {
               onChange={(e) => setCurrencyAmountLocal(Number(e.target.value))}
               type="number"
               placeholder="0"
-              className="flex-1 rounded-2xl border border-[var(--border)] bg-slate-50 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-75 rounded-2xl border border-[var(--border)] bg-slate-50 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
             <span className="text-xs font-semibold text-[var(--muted)] min-w-12 text-right">{localCode}</span>
           </div>
@@ -428,12 +428,12 @@ export default function BudgetPage() {
             <input
               value={formatCurrency(convertedHKD)}
               readOnly
-              className="flex-1 rounded-2xl border border-[var(--border)] bg-slate-100 p-3 text-sm text-[var(--muted)]"
+              className="w-75 rounded-2xl border border-[var(--border)] bg-slate-100 p-3 text-sm text-[var(--muted)]"
             />
             <span className="text-xs font-semibold text-[var(--muted)] min-w-12 text-right">HKD</span>
           </div>
 
-          <div className="pt-2 text-center text-xs text-slate-500 border-t border-slate-100">
+          <div className="pt-2 text-center text-xs text-muted border-t border-slate-100">
             1 {localCode} = {exchangeRate} HKD
           </div>
         </div>
@@ -441,7 +441,7 @@ export default function BudgetPage() {
 
       {/* Budget card */}
       <div className="mb-4 overflow-hidden rounded-3xl border border-[var(--border)] shadow-sm">
-        <div className="bg-gradient-to-r from-[#BC002D] to-[#E24A6A] p-5 text-[var(--primary-foreground)]">
+        <div className="bg-gradient-to-r from-[color:var(--hero-from)] to-[color:var(--hero-to)] p-5 text-[color:var(--primary-foreground)]">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <div className="text-xs opacity-90">總預算（HKD）</div>
@@ -460,8 +460,8 @@ export default function BudgetPage() {
           </div>
 
           <div className="mt-5">
-            <div className="h-2 w-full overflow-hidden rounded-full bg-white/30">
-              <div className="h-2 rounded-full bg-white/80" style={{ width: `${budgetPercentage}%` }} />
+            <div className="h-2 w-full overflow-hidden rounded-full bg-card/30">
+              <div className="h-2 rounded-full bg-card/80" style={{ width: `${budgetPercentage}%` }} />
             </div>
             <div className="mt-2 flex items-center justify-between text-xs opacity-90">
               <span>使用率</span>
@@ -483,14 +483,14 @@ export default function BudgetPage() {
       </div>
 
       {/* Category distribution (Donut) */}
-      <div className="mb-4 rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm">
+      <div className="mb-4 rounded-3xl border border-[var(--border)] bg-card p-4 shadow-sm">
         <div className="flex items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-[var(--foreground)]">類別支出分佈</div>
-            <div className="mt-1 text-xs text-slate-500">滑過圓環可查看每類金額與佔比</div>
+            <div className="mt-1 text-xs text-muted">滑過圓環可查看每類金額與佔比</div>
           </div>
           <div className="text-right">
-            <div className="text-xs text-slate-500">已花費（HKD）</div>
+            <div className="text-xs text-muted">已花費（HKD）</div>
             <div className="text-sm font-semibold text-[var(--foreground)]">{formatCurrency(totalExpenseHKD)}</div>
           </div>
         </div>
@@ -505,7 +505,7 @@ export default function BudgetPage() {
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value as ExpenseCategory | "")}
-          className="flex-1 rounded-2xl border border-[var(--border)] bg-white p-3 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+          className="flex-1 rounded-2xl border border-[var(--border)] bg-card p-3 text-sm text-foreground/70 focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
         >
           <option value="">全部類別</option>
           <option value="food">餐飲</option>
@@ -518,7 +518,7 @@ export default function BudgetPage() {
         <button
           type="button"
           onClick={openAddExpense}
-          className="inline-flex items-center gap-2 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[color:var(--menu-btn-bg)]  px-4 py-3 text-sm font-semibold text-[color:var(--menu-btn-fg)] hover:opacity-95"
         >
           <Plus className="h-4 w-4" />
           新增支出
@@ -529,11 +529,11 @@ export default function BudgetPage() {
       {filtered.length > 0 ? (
         <div className="space-y-3">
           {filtered.map(({ exp, idx }) => (
-            <div key={`exp-${idx}`} className="rounded-3xl border border-[var(--border)] bg-white p-4 shadow-sm">
+            <div key={`exp-${idx}`} className="rounded-3xl border border-[var(--border)] bg-card p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-semibold text-[var(--foreground)] truncate">{exp.title}</div>
-                  <div className="mt-1 text-xs text-slate-500">
+                  <div className="mt-1 text-xs text-muted">
                     {getCategoryLabel(exp.category)} · {exp.date}
                   </div>
                   <div className="mt-2 text-xs text-[var(--muted)]">
@@ -546,12 +546,12 @@ export default function BudgetPage() {
                 <div className="flex items-center gap-2">
                   <div className="text-right">
                     <div className="text-base font-semibold text-[#BC002D]">{formatCurrency(exp.amountHKD)}</div>
-                    <div className="text-xs text-slate-500">HKD</div>
+                    <div className="text-xs text-muted">HKD</div>
                   </div>
                   <button
                     type="button"
                     onClick={() => deleteExpense(idx)}
-                    className="rounded-2xl p-2 text-slate-500 hover:bg-slate-50"
+                    className="rounded-2xl p-2 text-muted hover:bg-slate-50"
                     aria-label="刪除支出"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -562,10 +562,10 @@ export default function BudgetPage() {
           ))}
         </div>
       ) : (
-        <div className="rounded-3xl border border-dashed border-[var(--border)] bg-white p-10 text-center">
+        <div className="rounded-3xl border border-dashed border-[var(--border)] bg-card p-10 text-center">
           <div className="text-4xl">💸</div>
-          <p className="mt-3 text-sm font-semibold text-slate-700">暫時未有支出紀錄</p>
-          <p className="mt-1 text-sm text-slate-500">按「新增支出」開始記錄。</p>
+          <p className="mt-3 text-sm font-semibold text-foreground/70">暫時未有支出紀錄</p>
+          <p className="mt-1 text-sm text-muted">按「新增支出」開始記錄。</p>
         </div>
       )}
 
@@ -573,15 +573,15 @@ export default function BudgetPage() {
       <Modal open={setBudgetOpen} title="設定總預算（HKD）" onClose={() => setSetBudgetOpen(false)}>
         <div className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">總預算（HKD）</label>
+            <label className="mb-2 block text-sm font-medium text-foreground">總預算（HKD）</label>
             <input
               type="number"
               value={budgetInputHKD}
               onChange={(e) => setBudgetInputHKD(Number(e.target.value))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="10000"
             />
-            <p className="mt-2 text-xs text-slate-500">
+            <p className="mt-2 text-xs text-muted">
               參考：約 {localCode} {formatCurrency(hkDToLocal(budgetInputHKD || 0))}
             </p>
           </div>
@@ -590,14 +590,14 @@ export default function BudgetPage() {
             <button
               type="button"
               onClick={saveBudgetHKD}
-              className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95"
+              className="flex-1 rounded-2xl bg-[color:var(--primary)] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95"
             >
               儲存
             </button>
             <button
               type="button"
               onClick={() => setSetBudgetOpen(false)}
-              className="flex-1 rounded-2xl bg-slate-100 px-4 py-3 text-sm font-semibold text-slate-700 hover:opacity-90"
+              className="flex-1 rounded-2xl border border-[color:var(--menu-btn-border)] bg-[color:var(--menu-btn-bg)] px-4 py-3 text-sm font-semibold text-[color:var(--menu-btn-fg)] hover:opacity-90"
             >
               取消
             </button>
@@ -609,21 +609,21 @@ export default function BudgetPage() {
       <Modal open={addExpenseOpen} title={`新增支出（輸入 ${localCode}）`} onClose={() => setAddExpenseOpen(false)}>
         <div className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">項目</label>
+            <label className="mb-2 block text-sm font-medium text-foreground">項目</label>
             <input
               value={expenseForm.title}
               onChange={(e) => setExpenseForm((p) => ({ ...p, title: e.target.value }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：餐廳 / 車費 / 手信"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">類別</label>
+            <label className="mb-2 block text-sm font-medium text-foreground">類別</label>
             <select
               value={expenseForm.category}
               onChange={(e) => setExpenseForm((p) => ({ ...p, category: e.target.value as ExpenseCategory | "" }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             >
               <option value="">請選擇</option>
               <option value="food">餐飲</option>
@@ -635,14 +635,14 @@ export default function BudgetPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               金額（<span className="text-[#BC002D] font-semibold">{localCode}</span>）
             </label>
             <input
               type="number"
               value={expenseForm.originalAmountLocal}
               onChange={(e) => setExpenseForm((p) => ({ ...p, originalAmountLocal: Number(e.target.value) }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="0"
             />
             {expenseForm.originalAmountLocal > 0 ? (
@@ -651,22 +651,22 @@ export default function BudgetPage() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">日期</label>
+            <label className="mb-2 block text-sm font-medium text-foreground">日期</label>
             <input
               type="date"
               value={expenseForm.date}
               onChange={(e) => setExpenseForm((p) => ({ ...p, date: e.target.value }))}
-              className="w-full rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-89 rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">備註（選填）</label>
+            <label className="mb-2 block text-sm font-medium text-foreground">備註（選填）</label>
             <textarea
               value={expenseForm.notes}
               onChange={(e) => setExpenseForm((p) => ({ ...p, notes: e.target.value }))}
               rows={3}
-              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
+              className="w-full resize-none rounded-2xl border border-[var(--border)] bg-card p-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#BC002D]/20"
               placeholder="例如：幾多人、包含乜..."
             />
           </div>
@@ -675,7 +675,7 @@ export default function BudgetPage() {
             <button
               type="button"
               onClick={saveExpense}
-              className="flex-1 rounded-2xl bg-[#BC002D] px-4 py-3 text-sm font-semibold text-[var(--primary-foreground)] hover:opacity-95"
+              className="flex-1 rounded-2xl bg-[color:var(--primary)] px-4 py-3 text-sm font-semibold text-[color:var(--primary-foreground)] hover:opacity-95"
             >
               儲存
             </button>

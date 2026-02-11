@@ -293,11 +293,12 @@ export function CreateTripModal(props: Props) {
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "14px 16px",
-    border: "1px solid #E9D5C8",
+    border: "1px solid var(--border)",
     borderRadius: 16,
-    background: "#ffffff",
-    color: "#2D3436",
+    background: "var(--card)",
+    color: "var(--foreground)",
     outline: "none",
+    boxShadow: "0 0 0 0 rgba(0,0,0,0)",
   };
 
   const defaultCreateTrigger = (
@@ -306,12 +307,12 @@ export function CreateTripModal(props: Props) {
       style={{
         width: "100%",
         marginTop: 12,
-        border: "2px dashed #facbcb",
+        border: "2px dashed color-mix(in srgb, var(--border) 70%, var(--primary) 30%)",
         borderRadius: 16,
         padding: 16,
-        background: "#ffffff",
+         background: "var(--card)",
         fontWeight: 700,
-        color: "#2D3436",
+         color: "var(--foreground)",
       }}
       type="button"
     >
@@ -356,11 +357,12 @@ export function CreateTripModal(props: Props) {
             style={{
               width: "100%",
               maxWidth: 420,
-              background: "rgba(255, 255, 255, 0.92)",
+              background: "color-mix(in srgb, var(--card) 92%, transparent)",
               borderRadius: 24,
               padding: 20,
               backdropFilter: "blur(12px)",
-              border: "1px solid #E9D5C8",
+              border: "1px solid var(--border)",
+              color: "var(--foreground)",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -387,16 +389,16 @@ export function CreateTripModal(props: Props) {
                 onClick={() => fileRef.current?.click()}
                 style={{
                   width: "100%",
-                  border: "2px dashed #E9D5C8",
+                    border: "2px dashed var(--border)",
                   borderRadius: 16,
                   padding: 14,
-                  background: "#FFF",
+                    background: "var(--card)",
                   fontWeight: 800,
                   display: "inline-flex",
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 8,
-                  color: "#2D3436",
+                    color: "var(--foreground)",
                 }}
               >
                 <ImageIcon size={18} />
@@ -424,10 +426,10 @@ export function CreateTripModal(props: Props) {
                       width: "100%",
                       borderRadius: 16,
                       padding: 12,
-                      background: "#fff",
-                      border: "1px solid #E9D5C8",
+                        background: "var(--card)",
+                      border: "1px solid var(--border)",
                       fontWeight: 800,
-                      color: "#2D3436",
+                      color: "var(--foreground)",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -476,13 +478,13 @@ export function CreateTripModal(props: Props) {
               </select>
 
               <input
-                style={inputStyle}
+                style={{ ...inputStyle, width: 365 }}
                 type="date"
                 value={form.startDate}
                 onChange={(e) => setForm((s) => ({ ...s, startDate: e.target.value }))}
               />
               <input
-                style={inputStyle}
+                style={{ ...inputStyle, width: 365 }}
                 type="date"
                 value={form.endDate}
                 onChange={(e) => setForm((s) => ({ ...s, endDate: e.target.value }))}
@@ -502,8 +504,8 @@ export function CreateTripModal(props: Props) {
                   marginTop: 6,
                   borderRadius: 16,
                   padding: 14,
-                  background: "#9e5470",
-                  color: "white",
+                  background: "var(--primary)",
+                  color: "var(--primary-foreground)",
                   fontWeight: 800,
                   opacity: canSubmit ? 1 : 0.6,
                 }}

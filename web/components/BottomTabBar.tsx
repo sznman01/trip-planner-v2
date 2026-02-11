@@ -12,9 +12,7 @@ export default function BottomTabBar() {
   if (!tripId || tripId === "undefined") return null;
 
   const base = `/trips/${tripId}`;
-
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 
   const tabs = [
     { href: `${base}/itinerary`, label: "行程", icon: Map },
@@ -25,7 +23,16 @@ export default function BottomTabBar() {
   ];
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t border-[color:var(--border)] bg-white/90 pb-[env(safe-area-inset-bottom)] backdrop-blur shadow-[0_-8px_24px_rgba(0,0,0,0.08)]">
+    <nav
+      className={[
+        "fixed inset-x-0 bottom-0 z-50 rounded-t-2xl border-t",
+        "border-[color:var(--border)]",
+        "bg-[color:var(--card)]/90",
+        "pb-[env(safe-area-inset-bottom)]",
+        "backdrop-blur",
+        "shadow-[0_-8px_24px_rgba(0,0,0,0.08)]",
+      ].join(" ")}
+    >
       <div className="mx-auto grid max-w-md grid-cols-5">
         {tabs.map((t) => {
           const active = isActive(t.href);
@@ -36,9 +43,12 @@ export default function BottomTabBar() {
               key={t.href}
               href={t.href}
               aria-current={active ? "page" : undefined}
-              className={`flex flex-col items-center justify-center gap-1 py-4 text-[11px] ${
-                active ? "text-black font-semibold" : "text-gray-500"
-              }`}
+              className={[
+                "flex flex-col items-center justify-center gap-1 py-4 text-[11px] transition",
+                active
+                  ? "text-[color:var(--foreground)] font-semibold"
+                  : "text-[color:var(--muted)]",
+              ].join(" ")}
             >
               <Icon className="h-6 w-6" strokeWidth={2} aria-hidden="true" />
               <span className="leading-none">{t.label}</span>

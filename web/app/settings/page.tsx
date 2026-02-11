@@ -16,6 +16,11 @@ const themes = [
 export default function SettingsPage() {
   const theme = useThemeStore((s) => s.theme);
   const setTheme = useThemeStore((s) => s.setTheme);
+  
+  const fontSize = useThemeStore((s) => s.fontSize);
+const setFontSize = useThemeStore((s) => s.setFontSize);
+
+const isDark = theme === "black";
 
   return (
     <div className="px-4 pt-4 pb-10 min-h-dvh bg-gradient-to-b from-[color:var(--background)] to-[color:var(--card)]">
@@ -36,32 +41,97 @@ export default function SettingsPage() {
           </h1>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {themes.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTheme(t.id)}
-              className={`group h-auto p-6 flex flex-col items-center gap-3 rounded-2xl border transition-all backdrop-blur-md shadow-sm hover:shadow-lg ${
-                theme === t.id 
-                  ? "border-[color:var(--primary)] bg-[color:var(--primary)]/5 ring-2 ring-[color:var(--primary)]/30" 
-                  : "border-[color:var(--border)] hover:border-[color:var(--ring)] hover:bg-[color:var(--card)]"
-              }`}
-            >
-              {/* 主題預覽卡 */}
-              <div 
-                className="w-20 h-20 rounded-xl shadow-lg group-hover:scale-105 transition-transform"
-                style={{ 
-                  backgroundColor: `var(--background)`, 
-                  color: `var(--foreground)` 
-                }}
-              />
-              <div className="text-center">
-                <div className="text-lg font-bold">{t.label}</div>
-                <div className="text-xs text-[color:var(--muted-foreground)]">{t.desc}</div>
-              </div>
-            </button>
-          ))}
-        </div>
+       <div className="mt-4 flex items-center gap-4 overflow-x-auto pb-2">
+  {themes.map((t) => {
+    const active = theme === t.id;
+    return (
+      <button
+        key={t.id}
+        type="button"
+        onClick={() => setTheme(t.id)}
+        className={[
+          "h-14 w-14 shrink-0 rounded-full border transition",
+          active
+            ? "ring-4 ring-[color:var(--ring)] border-[color:var(--primary)]"
+            : "border-[color:var(--border)]",
+        ].join(" ")}
+        aria-label={`主題：${t.label}`}
+        style={{
+          // 重要：色盤要「固定顏色」，唔係 var(--background)
+          // 你可以先用呢幾隻示意色，之後再同你 tokens 對齊
+          background:
+            t.id === "white"
+              ? "#F8F9FA"
+              : t.id === "beige"
+              ? "#FFF7ED"
+              : t.id === "pink"
+              ? "#FB7185"
+              : t.id === "blue"
+              ? "#3B82F6"
+              : "#0B0F14", // black
+        }}
+      />
+    );
+  })}
+  </div>
+
+{/* 字體大小 */}
+<div className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-6 shadow-sm">
+  <div className="flex items-center justify-between gap-3">
+    <div>
+      <div className="text-sm font-semibold text-[color:var(--foreground)]">字體大小</div>
+      <div className="mt-1 text-xs text-[color:var(--muted)]">全站生效</div>
+    </div>
+    <div className="tabular-nums text-sm font-semibold text-[color:var(--foreground)]">
+      {fontSize}px
+    </div>
+  </div>
+
+  <input
+    className="mt-4 w-full accent-[color:var(--primary)]"
+    type="range"
+    min={12}
+    max={22}
+    step={1}
+    value={fontSize}
+    onChange={(e) => setFontSize(Number(e.target.value))}
+    aria-label="字體大小"
+  />
+
+  <div className="mt-4 rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] px-4 py-3 text-sm text-[color:var(--foreground)]">
+    預覽：呢段文字會跟住字體大小改變
+  </div>
+</div>
+
+{/* 深色模式 */}
+<div className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-6 shadow-sm">
+  <div className="flex items-center justify-between gap-3">
+    <div>
+      <div className="text-sm font-semibold text-[color:var(--foreground)]">深色模式</div>
+      <div className="mt-1 text-xs text-[color:var(--muted)]">切換到黑色主題</div>
+    </div>
+
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "beige" : "black")}
+      className={[
+        "h-9 w-14 rounded-full border transition relative",
+        isDark
+          ? "bg-[color:var(--primary)] border-[color:var(--primary)]"
+          : "bg-[color:var(--background)] border-[color:var(--border)]",
+      ].join(" ")}
+      aria-label="切換深色模式"
+      aria-pressed={isDark}
+    >
+      <span
+        className={[
+          "absolute top-1 h-7 w-7 rounded-full bg-[color:var(--card)] shadow-sm transition",
+          isDark ? "left-6" : "left-1",
+        ].join(" ")}
+      />
+    </button>
+  </div>
+</div>
 
         <div className="p-6 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)]">
           <p className="text-sm text-[color:var(--muted-foreground)]">

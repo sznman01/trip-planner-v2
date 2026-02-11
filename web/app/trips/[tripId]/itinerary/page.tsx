@@ -529,12 +529,12 @@ export default function Page() {
       </div>
 
       {/* 封面 */}
-      <div className="overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-[color:var(--border)] bg-card shadow-sm">
         {trip.coverImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={trip.coverImage} alt={trip.title} className="h-48 w-full object-cover" />
         ) : (
-          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-rose-400 to-rose-600 text-4xl font-bold text-[var(--primary-foreground)]">
+          <div className="flex h-48 items-center justify-center bg-gradient-to-br from-[color:var(--hero-from)] to-[color:var(--hero-to)]  text-4xl font-bold text-[var(--primary-foreground)]">
             旅
           </div>
         )}
@@ -551,7 +551,7 @@ export default function Page() {
       <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="text-sm text-[color:var(--muted-foreground)]">出發倒數</div>
         <div className="mt-1 flex items-baseline gap-2">
-          <div className="text-4xl font-extrabold text-zinc-900">{countdownDaysText(daysToStart)}</div>
+          <div className="text-4xl font-extrabold text-foreground">{countdownDaysText(daysToStart)}</div>
           {daysToStart > 0 ? <div className="text-sm text-[color:var(--muted-foreground)]">日</div> : null}
         </div>
 
@@ -579,8 +579,8 @@ export default function Page() {
                 className={[
                   "min-w-[52px] flex-shrink-0 rounded-xl border px-3 py-2 text-center text-xs transition",
                   active
-                    ? "border-rose-500 bg-rose-500 font-semibold text-[var(--primary-foreground)]"
-                    : "border-[color:var(--border)] bg-zinc-50 text-zinc-700 hover:bg-white",
+                    ? "border-rose-500 bg-[color:var(--primary)] font-semibold text-[var(--primary-foreground)]"
+                    : "border-[color:var(--border)] bg-zinc-50 text-zinc-700 hover:bg-card",
                 ].join(" ")}
               >
                 <div>{`週${d.weekday}`}</div>
@@ -594,14 +594,14 @@ export default function Page() {
       {/* 當日標題卡 */}
       <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="text-xs text-[color:var(--muted-foreground)]">{selectedDateLabel}</div>
-        <div className="mt-1 text-lg font-bold text-zinc-900">第 {dayNum} 日</div>
+        <div className="mt-1 text-lg font-bold text-foreground">第 {dayNum} 日</div>
 
         {/* ✅ 隱藏輸入：只顯示地點 + 按鈕 */}
         <div className="mt-3 rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-3">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs font-semibold text-zinc-700">當日地點</div>
-              <div className="mt-1 truncate text-sm font-semibold text-zinc-900">
+              <div className="mt-1 truncate text-sm font-semibold text-foreground">
                 {savedPlaceText ? savedPlaceText : "未設定"}
               </div>
               {savedResolvedName ? (
@@ -623,7 +623,7 @@ export default function Page() {
                 setPlaceError(null)
                 setShowPlaceModal(true)
               }}
-              className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl border border-[color:var(--border)] bg-white px-3 text-xs font-semibold text-zinc-700 hover:bg-zinc-50"
+              className="inline-flex h-10 shrink-0 items-center justify-center rounded-xl border border-[color:var(--border)] bg-card px-3 text-xs font-semibold text-[color:var(--primary-foreground)] hover:bg-zinc-50"
             >
               {savedPlaceText ? "修改地點" : "設定地點"}
             </button>
@@ -644,13 +644,13 @@ export default function Page() {
             <div className="text-sm text-[color:var(--muted-foreground)]">天氣（最高 / 最低）</div>
 
             {weatherLoading ? (
-              <div className="mt-1 text-sm font-semibold text-zinc-900">載入中…</div>
+              <div className="mt-1 text-sm font-semibold text-foreground">載入中…</div>
             ) : weather ? (
-              <div className="mt-1 text-lg font-extrabold text-zinc-900">
+              <div className="mt-1 text-lg font-extrabold text-foreground">
                 {weather.tempMax}°C <span className="text-sm font-semibold text-[color:var(--muted-foreground)]">/ {weather.tempMin}°C</span>
               </div>
             ) : (
-              <div className="mt-1 text-sm font-semibold text-zinc-900">未有天氣資料</div>
+              <div className="mt-1 text-sm font-semibold text-foreground">未有天氣資料</div>
             )}
           </div>
         </div>
@@ -677,7 +677,7 @@ export default function Page() {
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-sm text-[color:var(--muted-foreground)]">住宿</div>
-              <div className="mt-1 truncate font-semibold text-zinc-900">{currentAccommodation ?? "-"}</div>
+              <div className="mt-1 truncate font-semibold text-foreground">{currentAccommodation ?? "-"}</div>
               {currentAccommodation ? (
                 <a
                   href={mapsSearchUrl(currentAccommodation)}
@@ -694,7 +694,7 @@ export default function Page() {
 
           <button
             onClick={openAccommodationEditor}
-            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-white p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
+            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-card p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
             aria-label="編輯住宿"
           >
             <Pencil className="h-4 w-4" />
@@ -705,10 +705,10 @@ export default function Page() {
       {/* 活動時間線 */}
       <div className="mt-4 rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] p-4 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
-          <div className="text-sm font-semibold text-zinc-900">今日行程</div>
+          <div className="text-sm font-semibold text-foreground">今日行程</div>
           <button
             onClick={openAddActivity}
-            className="inline-flex items-center gap-2 rounded-xl bg-rose-500 px-3 py-2 text-xs font-semibold text-[var(--primary-foreground)] hover:bg-rose-600"
+            className="inline-flex items-center gap-2 rounded-xl bg-[color:var(--menu-btn-bg)] px-3 py-2 text-xs font-semibold text-[color:var(--menu-btn-fg)] hover:bg-rose-600"
           >
             <Plus className="h-4 w-4" />
             新增活動
@@ -716,7 +716,7 @@ export default function Page() {
         </div>
 
         {currentDayActivities.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-[color:var(--border)] bg-zinc-50 p-6 text-center text-sm text-[color:var(--muted-foreground)]">
+          <div className="rounded-xl border border-dashed border-[color:var(--border)] bg-[color:var(--card)] p-6 text-center text-sm text-[color:var(--muted-foreground)]">
             今日未有活動，按「新增活動」開始規劃。
           </div>
         ) : (
@@ -727,12 +727,12 @@ export default function Page() {
               return (
                 <div key={`${fullIndex}-${item.time}-${item.name}`} className="relative">
                   {!isLast ? (
-                    <div className="absolute left-5 top-12 h-10 w-1 rounded-full bg-gradient-to-b from-rose-400 to-rose-600" />
+                    <div className="absolute left-5 top-12 h-10 w-1 rounded-full bg-[color:var(--primary)]" />
                   ) : null}
 
                   <div className="flex gap-3">
                     <div className="relative mt-1">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-rose-400 to-rose-600 text-[11px] font-bold text-[var(--primary-foreground)]">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[color:var(--primary)] text-[11px] font-bold text-[var(--primary-foreground)]">
                         {item.time}
                       </div>
                     </div>
@@ -740,7 +740,7 @@ export default function Page() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
-                          <div className="truncate text-sm font-semibold text-zinc-900">{item.name}</div>
+                          <div className="truncate text-sm font-semibold text-foreground">{item.name}</div>
                           <div className="mt-1 flex items-center gap-2 text-xs text-[color:var(--muted-foreground)]">
                             <span className={`inline-block h-2 w-2 rounded-full ${meta.dot}`} />
                             <span className="shrink-0">{meta.label}</span>
@@ -764,17 +764,17 @@ export default function Page() {
                         <div className="relative">
                           <button
                             onClick={() => setActiveActivityMenuFullIndex((v) => (v === fullIndex ? null : fullIndex))}
-                            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-white p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
+                            className="inline-flex items-center justify-center rounded-xl border border-[color:var(--border)] bg-card p-2 text-[color:var(--muted-foreground)] hover:bg-zinc-50"
                             aria-label="活動選單"
                           >
                             <MoreVertical className="h-4 w-4" />
                           </button>
 
                           {activeActivityMenuFullIndex === fullIndex ? (
-                            <div className="absolute right-0 top-11 z-20 w-40 overflow-hidden rounded-xl border border-[color:var(--border)] bg-white shadow-lg">
+                            <div className="absolute right-0 top-11 z-20 w-40 overflow-hidden rounded-xl border border-[color:var(--border)] bg-card shadow-lg">
                               <button
                                 onClick={() => openEditActivity(fullIndex)}
-                                className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-zinc-700 hover:bg-zinc-50"
+                                className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm text-[color:var(--primary-foreground)] hover:bg-gray-50"
                               >
                                 <Pencil className="h-4 w-4" />
                                 編輯
@@ -804,19 +804,19 @@ export default function Page() {
       {/* 當日地點彈窗 */}
       {showPlaceModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-card shadow-2xl">
             <div className="p-6">
               <div className="text-center text-xl font-bold text-[color:var(--foreground)]">設定當日地點 · 第 {dayNum} 日</div>
               <div className="mt-2 text-center text-sm text-[color:var(--muted-foreground)]">{formatDateDisplay(selectedIsoDate)}</div>
 
               <div className="mt-5 space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">地點</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">地點</label>
                   <input
                     value={placeDraft}
                     onChange={(e) => setPlaceDraft(e.target.value)}
                     placeholder="例如：蘇黎世 / Zurich / Shinjuku Tokyo"
-                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                   />
                   {placeError ? <div className="mt-2 text-xs text-red-600">{placeError}</div> : null}
                   <div className="mt-2 text-xs text-[color:var(--muted-foreground)]">
@@ -828,7 +828,7 @@ export default function Page() {
                   <button
                     onClick={handleSaveDayPlace}
                     disabled={placeSaving}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600 disabled:opacity-60"
+                    className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600 disabled:opacity-60"
                   >
                     {placeSaving ? "儲存中…" : "儲存並更新天氣"}
                   </button>
@@ -852,7 +852,7 @@ export default function Page() {
       {/* 活動彈窗 */}
       {showActivityModal ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-3xl border border-[color:var(--border)] bg-card shadow-2xl">
             <div className="p-6">
               <div className="text-center text-xl font-bold text-[color:var(--foreground)]">
                 {editingActivityFullIndex !== null ? "編輯活動" : "新增活動"}
@@ -860,41 +860,41 @@ export default function Page() {
 
               <div className="mt-5 space-y-3">
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">時間</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">時間</label>
                   <input
                     type="time"
                     value={activityForm.time}
                     onChange={(e) => setActivityForm((s) => ({ ...s, time: e.target.value }))}
-                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">名稱</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">名稱</label>
                   <input
                     value={activityForm.name}
                     onChange={(e) => setActivityForm((s) => ({ ...s, name: e.target.value }))}
                     placeholder="例如：淺草寺"
-                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">地點</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">地點</label>
                   <input
                     value={activityForm.location}
                     onChange={(e) => setActivityForm((s) => ({ ...s, location: e.target.value }))}
                     placeholder="例如：Tokyo / Shinjuku"
-                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                   />
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">類型</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">類型</label>
                   <select
                     value={activityForm.type}
                     onChange={(e) => setActivityForm((s) => ({ ...s, type: e.target.value as ActivityType }))}
-                    className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                   >
                     <option value="sightseeing">景點</option>
                     <option value="food">餐廳</option>
@@ -906,12 +906,12 @@ export default function Page() {
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-zinc-700">備註</label>
+                  <label className="mb-1 block text-sm font-medium text-[color:var(--foreground)]">備註</label>
                   <textarea
                     value={activityForm.notes}
                     onChange={(e) => setActivityForm((s) => ({ ...s, notes: e.target.value }))}
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                    className="w-full resize-none rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                     placeholder="可選填，例如：記得預約／預算"
                   />
                 </div>
@@ -919,7 +919,7 @@ export default function Page() {
                 <div className="mt-6 flex gap-3">
                   <button
                     onClick={saveActivity}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
+                    className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
                   >
                     儲存
                   </button>
@@ -953,13 +953,13 @@ export default function Page() {
                   value={accommodationName}
                   onChange={(e) => setAccommodationName(e.target.value)}
                   placeholder="例如：Shinjuku Hotel"
-                  className="w-full rounded-xl border border-[color:var(--border)] bg-zinc-50 px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-white"
+                  className="w-full rounded-xl border border-[color:var(--border)] bg-[color:var(--card)] px-4 py-3 text-sm outline-none focus:border-rose-500 focus:bg-card"
                 />
 
                 <div className="mt-6 flex gap-3">
                   <button
                     onClick={saveAccommodation}
-                    className="flex-1 rounded-xl bg-rose-500 px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
+                    className="flex-1 rounded-xl bg-[color:var(--primary)] px-4 py-3 text-sm font-bold text-[var(--primary-foreground)] hover:bg-rose-600"
                   >
                     儲存
                   </button>
@@ -979,9 +979,9 @@ export default function Page() {
       {/* 刪除確認 */}
       {showDeleteConfirm ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm overflow-hidden rounded-3xl border border-[color:var(--border)] bg-white shadow-2xl">
+          <div className="w-full max-w-sm overflow-hidden rounded-3xl border border-[color:var(--border)] bg-card shadow-2xl">
             <div className="p-6 text-center">
-              <div className="text-lg font-bold text-zinc-900">確認刪除活動？</div>
+              <div className="text-lg font-bold text-foreground">確認刪除活動？</div>
               <div className="mt-2 text-sm text-[color:var(--muted-foreground)]">此操作無法還原。</div>
 
               <div className="mt-6 flex gap-3">
